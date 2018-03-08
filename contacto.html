@@ -6,24 +6,41 @@
 		<link rel="icon" href="img/favicon.png" type="image/png">
 	</head>
 	<body>
-		<form action="">
-			Nombre: <input type="text" name="nombre"> <br> <br>
-			Email: <input type="text" name="email"> <br> <br>
-			Motivo de la consulta: <br>
-			<input type="radio" name="motivo"/> Evaluación       
-            <input type="radio" name="motivo"/>Sugerencias
-            <input type="radio" name="motivo"/>Críticas
-			<br>
-			<br>
-			<input type="checkbox" name="acepta">
-			Marque esta casilla para verificar que ha leído nuestros términos y condiciones del servicio
-			<br>
-			<br>
-			Consulta:
-			<br>
-			<textarea name="consulta" rows="10" cols="50"></textarea>
-			<br>
-			<br>
+		<form action="MAILTO:jorfajar@ucm.es" method="post" enctype="text/plain">
+			<div id="tnombre">
+				Nombre:
+				<p>
+					<input type="text" name="nombre">
+				</p>
+			</div> 
+			<div id="temail">
+				Email:
+				<p>
+					<input type="text" name="email">
+				</p>
+			</div>
+			<div id="motivoconulta">
+				<div id="texto">
+					Motivo de la consulta: 
+				</div>
+				<div id="motivos">
+					<input type="radio" name="motivo"/> Evaluación       
+		            <input type="radio" name="motivo"/>Sugerencias
+		            <input type="radio" name="motivo"/>Críticas
+	            </div>
+            </div>
+            <div id="condiciones">
+				<p>
+					<input type="checkbox" name="acepta">
+					Marque esta casilla para verificar que ha leído nuestros términos y condiciones del servicio
+				</p>
+			</div>
+			<div id="consulta">
+				<p>
+					Consulta:
+				</p>
+				<textarea name="consulta" rows="10" cols="50"></textarea>
+			</div>
 			<button type="submit">Enviar</button>
 			<button type="reset">Borrar</button>
 		</form>
