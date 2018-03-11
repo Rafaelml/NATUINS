@@ -1,0 +1,16 @@
+img{
+	width: 350px;
+	height: 500px;
+}
+
+body{
+	text-align: center;
+}
+
+div#tabla{
+	text-align: center;
+}
+
+div#tabla table{
+	margin: 0 auto;
+}
