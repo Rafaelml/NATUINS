@@ -42,21 +42,17 @@ session_start();
 			</div>
 
 			<div id="tuins">
-
 			<?php
+                $sql = "SELECT tuin FROM tuin";
+                $rec = $mysqli->query($sql);
+                $contador = $rec->num_rows;
 
-				$sql = "SELECT * FROM tuin";
-				$rec = $mysqli->query($sql);
-				$contador = $rec->num_rows;
-				$row = $rec->fetch_array();
-
-
-				//echo $row["tuin"];
-
-				for($i = 0; $i < $contador; $i++){
-					echo $row["tuin"];
-					echo '<br>';
-					$row = $rec->fetch_array();
+                for($i = $contador; $i >= 1 ; $i--){
+                    $sql = "SELECT tuin FROM tuin WHERE idTuin =".$i;
+                    $rec = $mysqli->query($sql);
+                    $row = $rec->fetch_array();
+                    echo $row["tuin"];
+                    echo '<br>';
 				}
 			?>
 			</div>
