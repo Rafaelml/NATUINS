@@ -10,6 +10,12 @@
 		echo 'Su usuario es incorrecto, intentelo de nuevo';
 		exit();
 	}
+
+	if($password != $repassword){
+		echo 'La contraseña no coincide. Vuelva a intentarlo.';
+		exit();
+	}
+	
     $usuario =new UserR();
     $usuario_data = array('idUser'=>'','nick'=>'$nick', 'pass'=>'$password', 'repass'=>'$repassword', 'email'=>'$email', 'telefono'=>'$telefono');
     $usuario->set($usuario_data);
