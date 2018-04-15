@@ -5,6 +5,7 @@
 	$repassword = htmlspecialchars(trim(strip_tags($_REQUEST['repass'])));
 	$email = htmlspecialchars(trim(strip_tags($_REQUEST['email'])));
 	$telefono = htmlspecialchars(trim(strip_tags($_REQUEST['tel'])));
+	$lenpass = strlen($password);
 
 	if(empty($nick) || empty($password) || empty($repassword) || empty($email)){
 		echo 'Su usuario es incorrecto, intentelo de nuevo';
@@ -15,9 +16,15 @@
 		echo 'La contraseña no coincide. Vuelva a intentarlo.';
 		exit();
 	}
-	
-    $usuario =new UserR();
-    $usuario_data = array('idUser'=>'','nick'=>'$nick', 'pass'=>'$password', 'repass'=>'$repassword', 'email'=>'$email', 'telefono'=>'$telefono');
-    $usuario->set($usuario_data);
-    header('Location: index.php');
+	else{
+		if($lenpass < 4 || $lenpass > 20){
+			echo 'La longitud de la contraseña es inadecuada. Vuelva a intentarlo.';
+			exit();
+		}
+
+	    $usuario =new UserR();
+	    $usuario_data = array('idUser'=>'','nick'=>'$nick', 'pass'=>'$password', 'repass'=>'$repassword', 'email'=>'$email', 'telefono'=>'$telefono');
+	    $usuario->set($usuario_data);
+	    header('Location: index.php');
+	}
 ?>
