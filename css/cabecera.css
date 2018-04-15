@@ -1,0 +1,24 @@
+*{
+	margin: 0;
+}
+
+div#cabecera{
+	padding: 30px;
+	height: 100px;
+	background-color: #8FD8A0;
+	margin: 0;
+}
+
+div#logo{
+	float: left;
+}
+
+img{
+	width: 200px;
+	height: 200px;
+	float: top;
+}
+
+div#action{
+	float: right;
+}
