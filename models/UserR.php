@@ -90,6 +90,13 @@ class UserR extends UserNoR
     public static function del($user){
         $bd = Conexion_BD_Natuins::getSingleton();
         if ($user->idUser != '') {
+            $bd->rows =null;
+            $bd->query ="SELECT idFollowing FROM `userfollowing` WHERE idUser ='$user->idUser'";
+            $bd->get_results_from_query();
+            $count =count($bd->get_results_from_query());
+            foreach ($bd->rows[0] as $campo =>$valor){
+                UserR::actDelContadorFollowers($valor);
+            }
             $bd->query = "DELETE FROM userr WHERE idUser='$user->idUser'";
             $bd->execute_single_query();
             $user =null;
@@ -132,48 +139,60 @@ class UserR extends UserNoR
         $bd->query = "INSERT INTO tuin (tuin, idUser) VALUES ('$tuin', '$idUser')";
         $bd->execute_single_query();
     }
-
-    public static function addFollowings($idUser , $idUserFollowing){
+    public static function addFollowings($idUser , $idUserFollowing)
+    {
         $bd = Conexion_BD_Natuins::getSingleton();
-        if(UserR::comprobarSiyaSigueAalguien($idUserFollowing)){
-            $bd->query ="INSERT INTO `followings` (`idFollowing`) VALUES ('$idUserFollowing')";
-            $bd->execute_single_query();
-        }
-        $bd->query ="INSERT INTO `userfollowing` (`idUser`, `idFollowing`) VALUES ('$idUser', '$idUserFollowing')";
+        $bd->query = "INSERT INTO `userfollowing` (`idUser`, `idFollowing`) VALUES ('$idUser', '$idUserFollowing')";
         $bd->execute_single_query();
-        UserR::actuilizarFollowers($idUserFollowing , $idUser);//Ya que cuando alguien decide seguir a alguien esa persona obtiene un seguidor
-     }
-    private function comprobarSiyaSigueAalguien($idFollowing){
-        $bd = Conexion_BD_Natuins::getSingleton();
-        $bol =false;
-        $bd->query = "SELECT idFollowing FROM followings WHERE idFollowing ='$idFollowing'";
-        $bd->get_results_from_query();
-        if(empty($bd->rows)){
-            $bol = true;
-        }
-        return $bol;
+        UserR::actAddContadorFollowings($idUser);
+        UserR::actuilizarFollowers($idUserFollowing,$idUser);
     }
-    private function comprobarSiyaleSigueAlguien($idUserFollower){
-        $bd = Conexion_BD_Natuins::getSingleton();
-        $bol =false;
-        $bd->query = "SELECT idFollower FROM followers WHERE idFollower ='$idUserFollower'";
+    private static function actDelContadorFollowers($idUser){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT `contFollowers` FROM `userr` WHERE `idUser`='$idUser'";
         $bd->get_results_from_query();
-        if(empty($bd->rows)){
-            $bol = true;
-        }
-        return $bol;
+        $a =array_pop($bd->rows);
+        $a =$a['contFollowers'] - 1;
+        $bd->query ="UPDATE `userr` SET `contFollowers` = '$a' WHERE `userr`.`idUser` = '$idUser'";
+        $bd->execute_single_query();
+
+    }
+    private static function actAddContadorFollowings($idUser){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT `contFollowings` FROM `userr` WHERE `idUser`='$idUser'";
+        $bd->get_results_from_query();
+        $a = array_pop($bd->rows);
+        $a =$a['contFollowings'] + 1;
+        $bd->query ="UPDATE `userr` SET `contFollowings` = '$a' WHERE `userr`.`idUser` = '$idUser'";
+        $bd->execute_single_query();
+    }
+    private static function actAddContadorFollowers($idUser){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT `contFollowers` FROM `userr` WHERE `idUser`='$idUser'";
+        $bd->get_results_from_query();
+        $a = array_pop($bd->rows);
+        $a =$a['contFollowers'] + 1;
+        $bd->query ="UPDATE `userr` SET `contFollowers` = '$a' WHERE `userr`.`idUser` = '$idUser'";
+        $bd->execute_single_query();
+    }
+    private static function actDelContadorFollowings($idUser){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT `contFollowings` FROM `userr` WHERE `idUser`='$idUser'";
+        $bd->get_results_from_query();
+        $a =array_pop($bd->rows);
+        $a =$a['contFollowings'] - 1;
+        $bd->query ="UPDATE `userr` SET `contFollowings` = '$a' WHERE `userr`.`idUser` = '$idUser'";
+        $bd->execute_single_query();
     }
     private function actuilizarFollowers($idUser , $idUserFollower){
         $bd = Conexion_BD_Natuins::getSingleton();
-        if(!UserR::comprobarSiyaleSigueAlguien($idUserFollower)){
-            $bd->query ="INSERT INTO `followers` (`idFollower`) VALUES ('$idUserFollower')";
-            $bd->execute_single_query();
-        }
         $bd->query ="INSERT INTO `userfollower` (`idUser`, `idFollower`) VALUES ('$idUser', '$idUserFollower')";
         $bd->execute_single_query();
+        UserR::actAddContadorFollowers($idUser);
     }
 
     public static function delFollowing($idUser , $idUserfollowings){
+        UserR::actDelContadorFollowings($idUser);
         $bd = Conexion_BD_Natuins::getSingleton();
         $bd->query = "DELETE FROM `userfollowing` WHERE `userfollowing`.`idUser` ='$idUser' AND `userfollowing`.`idFollowing` = '$idUserfollowings'";
         $bd->execute_single_query();
@@ -181,6 +200,7 @@ class UserR extends UserNoR
         return true;
     }
     private function actualizarDelFollowers($idUser , $idUserfollowers){
+        UserR::actDelContadorFollowers($idUserfollowers);
         $bd = Conexion_BD_Natuins::getSingleton();
         $bd->query = "DELETE FROM `userfollower` WHERE `userfollower`.`idUser` ='$idUserfollowers' AND `userfollower`.`idFollower` = '$idUser'";
         $bd->execute_single_query();
