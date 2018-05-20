@@ -4,6 +4,8 @@
 		<link rel="stylesheet" type="text/css" href="css/inicio.css">
 		<title>Registro</title>
 		<meta charset="utf-8">
+        <script type="text/javascript" src="../added/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="../added/js/ejercicio5.js"></script>
 	</head>
 	<body>
 
@@ -20,7 +22,7 @@
 				<legend>Registro</legend>
 				<div id="nick">
 					Nick:
-					<input type="text" name="nick">
+					<input type="text" name="nick"id="campoUser" /> <img id="userOK" src="img/ok.png" /> <img id="userMal" src="img/nook.png" />
 				</div>
 				<div id="contra">
 					Contraseña:
@@ -32,7 +34,7 @@
 				</div>
 				<div id="email">
 					Email:
-					<input type="text" name="email">
+					<input type="text" name="email" id="campoEmail" /> <img id="correoOK" src="img/ok.png" /> <img id="correoMal" src="img/nook.png"/>
 				</div>
 				<div id="tel">
 					Teléfono:

@@ -53,6 +53,14 @@ class Controller{
             UserR::delFollowing($idUser, $idUser_a_Seguir);
         }
     }
+    public static function comprobarNick ($nick){
+        $bool =false;
+        if(UserNoR::checkNick($nick)){
+         $bool =true;
+        }
+        return $bool;
+    }
+
 
     public static function cargarWeb(){//Ojo no está funcionando
         //require_once ("../viewss/inicio.php");
