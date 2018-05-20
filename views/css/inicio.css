@@ -1,0 +1,110 @@
+div#cabecera{
+	height: 100px;
+	background-color: #BA4A00;
+}
+
+div#cabecera h1{
+	float: left;
+}
+
+div#cabecera a{
+	float: right;
+	margin-left: 10px;
+	margin-top: 28px;
+}
+
+div#contenedor{
+	width: 1320px;
+	margin: auto;
+	/*border: 1px solid red;*/
+	/*background-color: #AAAAAA;*/
+	margin-top: 30px;
+}
+
+div#logo{
+	float: left;
+	padding: 15px 0 0 20px;
+	text-decoration: none;
+}
+
+div#interUsuario{
+	text-align: center;
+	float: right;
+}
+	div#interUsuario ul{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+		div#interUsuario ul li{
+			display: inline-block;
+			line-height: 68px;
+		}
+			div#interUsuario ul li a{
+				display: block;
+				padding: 0 10px;
+				text-decoration: none;
+			}
+
+div#sidebar-left{
+	padding: 10px;
+	width: 200px;
+	height: 600px;
+	float: left;
+	background-color: #DC7633;
+}
+
+div#contenido{
+
+	padding: 10px;
+	min-height: 600px;
+	width: 700px;
+	float: left;
+	background-color: #EDBB99;
+}
+
+div#contenido h1{
+	margin: 0;
+}
+
+div#sidebar-right{
+	padding: 10px;
+	height: 600px;
+	width: 360px;
+	background-color: #DC7633;
+	float: right;
+}
+
+div#pie{
+
+	padding: 100px 10px 10px 10px;
+	float: left;
+	height: 600px;
+	width: 360px;
+}
+
+div#tuin{
+	border: 1px solid black;
+	min-height: 30px;
+}
+
+div#navegador{
+	text-align: center;
+	background-color: #BA4A00;
+}
+	div#navegador ul{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		
+	}
+		div#navegador ul li{
+			display: inline-block;
+			line-height: 80px;
+		}
+			div#navegador ul li a{
+				display: block;
+				padding: 0 10px;
+				text-decoration: none;
+			}
+
