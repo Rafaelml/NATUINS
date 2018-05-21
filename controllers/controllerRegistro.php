@@ -21,6 +21,7 @@
 			echo 'La longitud de la contraseña es inadecuada. Vuelva a intentarlo.';
 			exit();
 		}
+
 	    $usuario_data = array('idUser'=>'','nick'=>$nick, 'password'=>$password, 'repass'=>$repassword, 'email'=>$email, 'telefono'=>$telefono);
 		Controller::registr($usuario_data,$cont);
 	}

@@ -54,6 +54,7 @@ class UserNoR
         }
         return $bd->rows[0]['idUser'];
     }
+
     public static function checkEmail($email){
         $bd = Conexion_BD_Natuins::getSingleton();
         if ($email != "") {
@@ -63,6 +64,7 @@ class UserNoR
         }
         return $email;
     }
+
     public static function checkNick($nick){
         $bd = Conexion_BD_Natuins::getSingleton();
         if ($nick != "") {
@@ -72,6 +74,7 @@ class UserNoR
         }
         return $nick;
     }
+
     public static function buscar($nombre =''){
         $bd = Conexion_BD_Natuins::getSingleton();
         if(empty($nombre)){

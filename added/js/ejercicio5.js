@@ -2,6 +2,7 @@ $(document).ready(function() {
 
 	$("#correoOK").hide();
 	$("#userOK").hide();
+	$("#repassOK").hide();
 
 	$("#campoEmail").change(function(){
 
@@ -18,9 +19,23 @@ $(document).ready(function() {
 		}
 	});
 
+	/*$("#repass").change(function(){
+
+		if (repassIgual($("#repass").val() ) ) {
+
+			$("#repassMal").hide();
+			$("#repassOK").show();
+
+		} else {
+
+			$("#repassMal").show();
+			$("#repassOK").hide();
+
+		}
+	});*/
 	
 	$("#campoUser").change(function(){
-		var url = "../controllers/comprobarUsuario.php?user=" + $("#campoUser").val();
+		var url = "../controllers/comprobarNickUsuario.php?user=" + $("#campoUser").val();
 		$.get(url,usuarioExiste);
     });
 
@@ -46,8 +61,10 @@ $(document).ready(function() {
 			$("#userOK").show();
 			$("#userMal").hide();
 		}
-
 	}
 
+	function repassIgual(password){
 
+		
+	}
 })

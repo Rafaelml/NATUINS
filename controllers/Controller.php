@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rafael
- * Date: 20/4/18
- * Time: 18:39
- */
 
 require_once  '../models/UserNoR.php';
 require_once  '../models/UserR.php';
+
 class Controller{
     private $user;
     public $tuins;
@@ -61,19 +56,38 @@ class Controller{
         return $bool;
     }
 
+    public static function comprobarMail($email){
+        $bool =false;
 
-    public static function cargarWeb(){//Ojo no está funcionando
-        //require_once ("../viewss/inicio.php");
+        if(UserNoR::checkEmail($email)){
+         $bool =true;
+        }
+
+        return $bool;
+    }
+
+    /*public static function comprobarPass($password, $password2){
+        $bool =false;
+
+        if($password == $password2){
+         $bool =true;
+        }
+
+        return $bool;
+    }*/
+
+    public static function cargarWeb(){
         header("Location: views/inicio.php");
     }
+
     public static function registr($user_data = array(),$cont){
         $nick = $cont->user->checkNick($user_data['nick']);
         $email = $cont->user->checkEmail($user_data['email']);
         if ($nick != null) {
-            echo 'El nick incertado ya está en uso. Por favor pruebe con otro';
+            echo 'El nick insertado ya está en uso. Por favor pruebe con otro';
             exit();
         } elseif ($email != null) {
-            echo 'El email incertado ya está en uso. Por favor pruebe con otro';
+            echo 'El email insertado ya está en uso. Por favor pruebe con otro';
             exit();
         } else {
             $cont->user = UserR::crea($user_data);
@@ -85,7 +99,6 @@ class Controller{
             }
         }
     }
-
 
     public static function login($nick,$pass,$cont){
         $user =UserR::init_Session($nick,$pass);

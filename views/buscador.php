@@ -9,6 +9,8 @@ require_once("../models/UserNoR.php");
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/inicio.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
 	<title>Buscador</title>
 
 
@@ -20,8 +22,10 @@ require_once("../models/UserNoR.php");
 
 				$('#submit').attr('disabled', false);
 			else
+
                 $('#submit').attr('disabled', true);
 		}
+
 	</script>
 
 </head>
@@ -35,7 +39,6 @@ require_once("../models/UserNoR.php");
 		</div>
 
 		<?php include ('body/sidebarIzq.php'); ?>
-
 
 
 		<div id="contenido">
