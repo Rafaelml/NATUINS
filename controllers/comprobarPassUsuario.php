@@ -2,7 +2,6 @@
 
 require_once ("Controller.php");
 
-
 if (Controller::comprobarPass($_REQUEST["repass"])) {
 	     ob_end_clean();
 	    echo "igual";

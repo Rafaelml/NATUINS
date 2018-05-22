@@ -3,48 +3,34 @@ $(document).ready(function() {
 	$("#correoOK").hide();
 	$("#userOK").hide();
 	$("#repassOK").hide();
-
-	$("#campoEmail").change(function(){
-
-		if (correoValido($("#campoEmail").val() ) ) {
-
-			$("#correoMal").hide();
-			$("#correoOK").show();
-
-		} else {
-
-			$("#correoMal").show();
-			$("#correoOK").hide();
-
-		}
-	});
-
-	/*$("#repass").change(function(){
-
-		if (repassIgual($("#repass").val() ) ) {
-
-			$("#repassMal").hide();
-			$("#repassOK").show();
-
-		} else {
-
-			$("#repassMal").show();
-			$("#repassOK").hide();
-
-		}
-	});*/
 	
 	$("#campoUser").change(function(){
 		var url = "../controllers/comprobarNickUsuario.php?user=" + $("#campoUser").val();
 		$.get(url,usuarioExiste);
     });
 
+    $("#campoEmail").change(function(){
+		var url = "../controllers/comprobarMailUsuario.php?email=" + $("#campoEmail").val();
+		$.get(url,correoValido);
+    });
 
-	function correoValido(correo) {
+
+	function correoValido(data,correo) {
 		var arroba = correo.indexOf("@");
 		correo = correo.substring(arroba,correo.length);
 		var punto = correo.indexOf(".");
 		correo = correo.substring(punto + 1,correo.length);
+
+		if(data == "existe"){
+			$("#correoMal").show();
+			$("#correoOK").hide();
+			alert("El mail ya existe, escoge otro");
+		}
+
+		else if (data == "disponible"){
+			$("#correoMal").hide();
+			$("#correoOK").show();
+		}
 
 		return ( arroba > 0 && punto > 1 && correo.length > 0);
 	}
