@@ -87,5 +87,12 @@ class UserNoR
 
         return $nombre;
     }
+    public static function viewDestacados(){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->rows =null;
+        $bd->query ="SELECT * FROM `userr` ORDER BY contFollowers DESC";
+        $bd->get_results_from_query();
+        return $bd->rows;
+    }
 }
 ?>

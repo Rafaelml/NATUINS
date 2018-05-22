@@ -116,5 +116,23 @@ class Controller{
         UserR::createTuin($tuin,$idUser);
         header('Location: ../views/index2.php');
     }
+    public static function viewPersonasDestacadas(){
+        $a ="";
+        $dest =UserNoR::viewDestacados();
+        for($i =0;$i<5;$i++){
+            $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
+        }
+        return $a;
+    }
+    public static function viewPersonasDestacadasRegistrado(){
+        $a ="";
+        $dest =UserNoR::viewDestacados();
+        for($i =0;$i<5;$i++){
+            $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
+            $a .='<form action="../controllers/seguir.php?$idUser='.$dest[$i]['idUser'].'" method="POST">
+            <button type="submit">Seguir</button></form></div>';
+        }
+        return $a;
+    }
 }
 ?>
