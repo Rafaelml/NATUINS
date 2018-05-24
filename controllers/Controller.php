@@ -105,7 +105,7 @@ class Controller{
         if($user){
             $cont->user =$user;
         }
-        header('Location: ../views/index2.php');
+        header('Location: ../views/inicio.php');
     }
     public static function logout($cont){
         UserR::closeSession();
@@ -119,17 +119,19 @@ class Controller{
     public static function viewPersonasDestacadas(){
         $a ="";
         $dest =UserNoR::viewDestacados();
-        for($i =0;$i<5;$i++){
+        $count =count($dest);
+        for($i =0;$i<$count;$i++){
             $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
         }
         return $a;
     }
-    public static function viewPersonasDestacadasRegistrado(){
+    public static function viewPersonasDestacadasRegistrado($idUser){
         $a ="";
-        $dest =UserNoR::viewDestacados();
-        for($i =0;$i<5;$i++){
+        $dest =UserR::viewDestacadosR($idUser);
+        $count =count($dest);
+        for($i =0;$i<$count;$i++){
             $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
-            $a .='<form action="../controllers/seguir.php?$idUser='.$dest[$i]['idUser'].'" method="POST">
+            $a .='<div><form action="../controllers/seguir.php?$idUser='.$dest[$i]['idUser'].'" method="POST">
             <button type="submit">Seguir</button></form></div>';
         }
         return $a;

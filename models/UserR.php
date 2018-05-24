@@ -15,6 +15,7 @@ class UserR extends UserNoR
     private $status;
     private $email;
     private $message;
+    private $privacidad;
     //protected $followers;
     //protected $followings;
     //protected Tuins $numtuins;
@@ -56,12 +57,19 @@ class UserR extends UserNoR
             return false;
         } else {
             unset($bd->rows);
-            $bd->query ="INSERT INTO `userr` (`idUser`, `name`, `nick`, `password`, `status`, `img`, `telefono`, `email`) VALUES (NULL, '', '$user->nick', '$user->password', '', '', '$user->telefono', '$user->email')";
+            $bd->query ="INSERT INTO `userr` (`idUser`, `name`, `nick`, `password`, `status`, `img`, `telefono`, `email`,`privacidad` ) VALUES (NULL, '$user->name', '$user->nick', '$user->password', '', '', '$user->telefono', '$user->email','$user->privacidad')";
             $bd->execute_single_query();
             $user->idUser =$user->get($user->nick);
             $user->createSession();
             return $user;
         }
+    }
+    public static function viewDestacadosR($idUser){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->rows =null;
+        $bd->query ="SELECT * FROM `userr` WHERE `idUser` NOT IN (SELECT `idFollowing` FROM `userfollowing` WHERE `idUser` ='$idUser') AND `idUser` NOT IN ('$idUser') ORDER BY contFollowers DESC";
+        $bd->get_results_from_query();
+        return $bd->rows;
     }
 
     private function setCampos($user){

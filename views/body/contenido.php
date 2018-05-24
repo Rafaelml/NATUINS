@@ -24,11 +24,9 @@
 <?php
 	}else{
 ?>
-		<div id="tuins">
 <?php
             require_once ("../controllers/Controller.php");
             echo Controller::viewTuins();
     }
 ?>
-        </div>
 </div>
