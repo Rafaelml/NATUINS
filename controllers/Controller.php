@@ -105,7 +105,7 @@ class Controller{
         if($user){
             $cont->user =$user;
         }
-        header('Location: ../views/index2.php');
+        header('Location: ../views/inicio.php');
     }
     public static function logout($cont){
         UserR::closeSession();
@@ -129,7 +129,7 @@ class Controller{
         $dest =UserNoR::viewDestacados();
         for($i =0;$i<5;$i++){
             $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
-            $a .='<form action="../controllers/seguir.php?$idUser='.$dest[$i]['idUser'].'" method="POST">
+            $a .='<div><form action="../controllers/seguir.php?$idUser='.$dest[$i]['idUser'].'" method="POST">
             <button type="submit">Seguir</button></form></div>';
         }
         return $a;

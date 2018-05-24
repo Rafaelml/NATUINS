@@ -30,5 +30,4 @@
             echo Controller::viewTuins();
     }
 ?>
-        </div>
 </div>
