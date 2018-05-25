@@ -1,6 +1,6 @@
 <div id="cabecera">
 	<div id="logo">
-		<h1>NATUINS</h1>
+		<h1><a href="index2.php" name="natuins">NATUINS</a></h1>
 	</div>
 
 	<div id="interUsuario">

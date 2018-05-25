@@ -35,8 +35,6 @@
 				<div id="recontra">
 					Repetir contraseña:
 					<input type="password" name="repass" id="repass">
-					<img id="repassOK" src="img/ok.png" />
-					<img id="repassMal" src="img/nook.png" />
 				</div>
 
 				<div id="email">

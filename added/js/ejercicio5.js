@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$("#userOK").hide();
 	$("#repassOK").hide();
 
-	/*$("#campoEmail").change(function(){
+	$("#campoEmail").change(function(){
 
 		if (correoValido($("#campoEmail").val() ) ) {
 
@@ -17,27 +17,21 @@ $(document).ready(function() {
 			$("#correoOK").hide();
 
 		}
-	});*/
+	});
 	
 	$("#campoUser").change(function(){
 		var url = "../controllers/comprobarNickUsuario.php?user=" + $("#campoUser").val();
 		$.get(url,usuarioExiste);
     });
 
-    $("#campoEmail").change(function(){
-		var url = "../controllers/comprobarMailUsuario.php?email=" + $("#campoEmail").val();
-		$.checkEmail(url,correoValido);
-    });
-
-
-	function correoValido(data,correo) {
+	function correoValido(/*data,*/correo) {
 
 		var arroba = correo.indexOf("@");
 		correo = correo.substring(arroba,correo.length);
 		var punto = correo.indexOf(".");
 		correo = correo.substring(punto + 1,correo.length);
 
-		if(data == "existe" && correo){
+		/*if(data == "existe"){
 			$("#correoMal").show();
 			$("#correoOK").hide();
 			alert("El mail ya existe, escoge otro");
@@ -46,7 +40,7 @@ $(document).ready(function() {
 		else if (data == "disponible"){
 			$("#correoMal").hide();
 			$("#correoOK").show();
-		}
+		}*/
 
 		return ( arroba > 0 && punto > 1 && correo.length > 0);
 	}
@@ -63,10 +57,5 @@ $(document).ready(function() {
 			$("#userOK").show();
 			$("#userMal").hide();
 		}
-	}
-
-	function repassIgual(password){
-
-		
 	}
 })
