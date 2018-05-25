@@ -1,12 +1,10 @@
 <?php
     require_once ("Controller.php");
-    $name = htmlspecialchars(trim(strip_tags($_REQUEST['nick'])));
     $nick = htmlspecialchars(trim(strip_tags($_REQUEST['nick'])));
 	$password = htmlspecialchars(trim(strip_tags($_REQUEST['pass'])));
 	$repassword = htmlspecialchars(trim(strip_tags($_REQUEST['repass'])));
 	$email = htmlspecialchars(trim(strip_tags($_REQUEST['email'])));
 	$telefono = htmlspecialchars(trim(strip_tags($_REQUEST['tel'])));
-    $privacidad = htmlspecialchars(trim(strip_tags($_REQUEST['privacidad'])));
 	$lenpass = strlen($password);
 
 	if(empty($nick) || empty($password) || empty($repassword) || empty($email)){
@@ -24,16 +22,7 @@
 			exit();
 		}
 
-		if($privacidad =='publica'){
-		    $privacidad =0;
-        }
-        else{
-            $privacidad =1;
-        }
-
-
-
-	    $usuario_data = array('name'=>$name,'idUser'=>'','nick'=>$nick, 'password'=>$password, 'repass'=>$repassword, 'email'=>$email, 'telefono'=>$telefono,'privacidad'=>$privacidad);
+	    $usuario_data = array('idUser'=>'','nick'=>$nick, 'password'=>$password, 'repass'=>$repassword, 'email'=>$email, 'telefono'=>$telefono);
 		Controller::registr($usuario_data,$cont);
 	}
 ?>

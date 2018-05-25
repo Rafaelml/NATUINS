@@ -15,6 +15,7 @@
 	<div id="contenedor">
 
 		<?php
+		
 			require("body/cabecera.php");
 			require("body/navegador.php");
 			require("body/sidebarIzq.php");

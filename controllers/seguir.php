@@ -8,5 +8,6 @@
         else{
             $_SESSION['pulsado'] = false;
         }
-        header('Location: ../views/index2.php');
+	header('Location: ../views/index2.php');
+	
 ?>

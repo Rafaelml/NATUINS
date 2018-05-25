@@ -1,8 +1,6 @@
 <?php
-
 require_once  '../models/UserNoR.php';
 require_once  '../models/UserR.php';
-
 class Controller{
     private $user;
     public $tuins;
@@ -39,7 +37,6 @@ class Controller{
         }
         return $mostrar;
     }
-
     public static function actFollowing($idUser ,$idUser_a_Seguir){
         if(!UserR::existFollowing($idUser,$idUser_a_Seguir)){
             UserR::addFollowings($idUser,$idUser_a_Seguir);
@@ -55,31 +52,24 @@ class Controller{
         }
         return $bool;
     }
-
     public static function comprobarMail($email){
         $bool =false;
-
         if(UserNoR::checkEmail($email)){
          $bool =true;
         }
-
         return $bool;
     }
-
     /*public static function comprobarPass($password, $password2){
         $bool =false;
-
         if($password == $password2){
          $bool =true;
         }
-
         return $bool;
     }*/
 
     public static function cargarWeb(){
         header("Location: views/inicio.php");
     }
-
     public static function registr($user_data = array(),$cont){
         $nick = $cont->user->checkNick($user_data['nick']);
         $email = $cont->user->checkEmail($user_data['email']);
@@ -99,13 +89,12 @@ class Controller{
             }
         }
     }
-
     public static function login($nick,$pass,$cont){
         $user =UserR::init_Session($nick,$pass);
         if($user){
             $cont->user =$user;
         }
-        header('Location: ../views/inicio.php');
+        header('Location: ../views/index2.php');
     }
     public static function logout($cont){
         UserR::closeSession();
@@ -119,22 +108,43 @@ class Controller{
     public static function viewPersonasDestacadas(){
         $a ="";
         $dest =UserNoR::viewDestacados();
-        $count =count($dest);
-        for($i =0;$i<$count;$i++){
+        for($i =0;$i<5;$i++){
             $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
         }
         return $a;
     }
-    public static function viewPersonasDestacadasRegistrado($idUser){
+    public static function viewPersonasDestacadasRegistrado(){
         $a ="";
-        $dest =UserR::viewDestacadosR($idUser);
-        $count =count($dest);
-        for($i =0;$i<$count;$i++){
+        $dest =UserNoR::viewDestacados();
+        for($i =0;$i<5;$i++){
             $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
             $a .='<div><form action="../controllers/seguir.php?$idUser='.$dest[$i]['idUser'].'" method="POST">
             <button type="submit">Seguir</button></form></div>';
         }
         return $a;
+    }
+
+    public static function viewYourTuins(){
+        session_start();
+        $mostrar ="";
+        $usuario =new UserNoR();
+        $tuins = $usuario->viewTuins();
+        $nickuser = $_SESSION['usuario'];
+
+        if($tuins != null) {
+            $cont = 4;
+            if ($cont > count($tuins)){
+                $cont =count($tuins);
+            }
+            for ($i = 0; $i < $cont; $i++) {
+                if($nickuser == $tuins[$i]["0"]){
+                    $mostrar .='<div id="tuin">';
+                    $mostrar .= '<p>' . $tuins[$i]["tuin"] . '</p>';
+                    $mostrar .='</div>';
+                }
+            }
+        }
+        return $mostrar;
     }
 }
 ?>

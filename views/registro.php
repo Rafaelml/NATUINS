@@ -20,10 +20,6 @@
 		<form action="../controllers/controllerRegistro.php" method="post">
 			<fieldset>
 				<legend>Registro</legend>
-                <div id="name">
-                    Nombre:
-                    <input type="text" name="name" id="campoUser" />
-                </div>
 				<div id="nick">
 					Nick:
 					<input type="text" name="nick" id="campoUser" />
@@ -54,12 +50,6 @@
 					Teléfono:
 					<input type="text" name="tel">
 				</div>
-                <div id="privacidad">
-                    Privada:
-                    <input type="radio" name="privacidad" id="privacidad" value="privada">
-                    Pública:
-                    <input type="radio" name="privacidad" id="publica" value="publica">
-                </div>
 
 				<input type="submit" name="registro" value="Registro" />
 				<button type="reset">Borrar</button>
@@ -68,7 +58,7 @@
 
 		</div>
 
-		<?php include('body/sidebarDer.php'); ?>
+		<?php include ('body/sidebarDer.php'); ?>
 
 	</div>
 	</body>

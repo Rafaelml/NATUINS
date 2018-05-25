@@ -3,6 +3,21 @@ $(document).ready(function() {
 	$("#correoOK").hide();
 	$("#userOK").hide();
 	$("#repassOK").hide();
+
+	/*$("#campoEmail").change(function(){
+
+		if (correoValido($("#campoEmail").val() ) ) {
+
+			$("#correoMal").hide();
+			$("#correoOK").show();
+
+		} else {
+
+			$("#correoMal").show();
+			$("#correoOK").hide();
+
+		}
+	});*/
 	
 	$("#campoUser").change(function(){
 		var url = "../controllers/comprobarNickUsuario.php?user=" + $("#campoUser").val();
@@ -11,17 +26,18 @@ $(document).ready(function() {
 
     $("#campoEmail").change(function(){
 		var url = "../controllers/comprobarMailUsuario.php?email=" + $("#campoEmail").val();
-		$.get(url,correoValido);
+		$.checkEmail(url,correoValido);
     });
 
 
 	function correoValido(data,correo) {
+
 		var arroba = correo.indexOf("@");
 		correo = correo.substring(arroba,correo.length);
 		var punto = correo.indexOf(".");
 		correo = correo.substring(punto + 1,correo.length);
 
-		if(data == "existe"){
+		if(data == "existe" && correo){
 			$("#correoMal").show();
 			$("#correoOK").hide();
 			alert("El mail ya existe, escoge otro");
