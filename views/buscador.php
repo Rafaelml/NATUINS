@@ -34,8 +34,11 @@ require_once("../models/UserNoR.php");
 	<div id="contenedor">
 
 			<?php include ('body/cabecera.php'); ?>
+			
 			<?php include ('body/navegador.php'); ?>
-			<?php include ('body/sidebarIzq.php'); ?>
+		</div>
+
+		<?php include ('body/sidebarIzq.php'); ?>
 
 
 		<div id="contenido">
@@ -50,7 +53,7 @@ require_once("../models/UserNoR.php");
 
 		</div>
 
-		<?php include ('body/sidebarDer.php'); ?>
+		<?php include('body/sidebarDer.php'); ?>
 
 	</div>
 </body>
