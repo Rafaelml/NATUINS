@@ -6,7 +6,7 @@
 	if(empty($tuin)){
 		exit();
 	}
-    require_once ("Controller.php");
+    require_once ("controller/Controller.php");
     Controller::processTuin($tuin,$idUser,$cont);
     Controller::viewTuins();
 ?>

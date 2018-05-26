@@ -1,8 +1,8 @@
 <?php
 
-require_once  '../models/UserNoR.php';
-require_once  '../models/UserR.php';
-require_once  '../models/Admin.php';
+require_once '../models/UserNoR.php';
+require_once '../models/UserR.php';
+require_once '../models/Admin.php';
 
 class Controller{
     private $user;
@@ -117,21 +117,16 @@ public static function cargarWeb(){
         $ver =Admin::viewUsers();
         $cont =count($ver);
         $mostrar ="";
-        $mostrar .= '<form action="../controllers/ControllerUser.php" method="POST">';
+        $mostrar .= '<form action="../ControllerUser.php" method="POST">';
         $mostrar .= '<select name="usuarios">';
         for ($i = 0; $i < $cont; $i++) {
-            $a =$ver[$i]["name"];
             $b =$ver[$i]["nick"];
-            $c =$ver[$i]["email"];
             $mostrar .= '<div id="tuin">';
-            //$mostrar.="Nombre: ";
-            //$mostrar.=$a;
-            //$mostrar.="<br/>";
             $mostrar .= "Nick: ";
             $mostrar .= '<option value="' . $b . '">' . $b . '</option>';
-           // echo '<form action="../controllers/ControllerUser.php?$userdel='.$b.'" method="POST">
-            $mostrar .= '<button type="submit">Eliminar</button>';
         }
+        $mostrar.="</select>";
+        $mostrar.="<button type='submit'>Eliminar</button>";
         $mostrar .= '</form>';
         $mostrar .= '</div>';
         return $mostrar;

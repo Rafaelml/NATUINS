@@ -7,7 +7,7 @@
  */
 
 require_once "Conexion_BD_Natuins.php";
-require_once "../controllers/Controller.php";
+require_once "../controllers/controller/Controller.php";
 
 /**
 * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria

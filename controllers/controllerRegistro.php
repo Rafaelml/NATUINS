@@ -1,5 +1,5 @@
 <?php
-    require_once ("Controller.php");
+    require_once ("controller/Controller.php");
     $name = htmlspecialchars(trim(strip_tags($_REQUEST['nick'])));
     $nick = htmlspecialchars(trim(strip_tags($_REQUEST['nick'])));
 	$password = htmlspecialchars(trim(strip_tags($_REQUEST['pass'])));

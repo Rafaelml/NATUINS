@@ -1,5 +1,5 @@
 <?php
-    require_once ("Controller.php");
+    require_once ("controller/Controller.php");
 	session_start();
 	    Controller::actFollowing($_SESSION['idUser'],$_REQUEST['$idUser']);
 	    if($_SESSION['pulsado'] ==false){

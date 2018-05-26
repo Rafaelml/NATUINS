@@ -58,12 +58,21 @@ class UserR extends UserNoR
             return false;
         }else {
             unset($bd->rows);
-            $bd->query ="INSERT INTO `userr` (`idUser`, `name`, `nick`, `password`, `status`, `img`, `telefono`, `email`,`privacidad` ) VALUES (NULL, '$user->name', '$user->nick', '$user->password', '', '', '$user->telefono', '$user->email','$user->privacidad')";
+            $user->password =UserR::hashPassword($user->password);
+            $bd->query ="INSERT INTO `userr` (`idUser`, `name`, `nick`, `password`, `status`, `img`, `telefono`, `email`,`privacidad`) VALUES (NULL, '$user->name', '$user->nick', '$user->password', '', '', '$user->telefono', '$user->email','$user->privacidad')";
             $bd->execute_single_query();
             $user->idUser =$user->get($user->nick);
             $user->createSession();
             return $user;
         }
+    }
+    private static function hashPassword($password)
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+    public function compruebaPassword($password,$hash)
+    {
+        return password_verify($password, $hash);
     }
     public static function viewDestacadosR($idUser){
         $bd =Conexion_BD_Natuins::getSingleton();
@@ -96,17 +105,17 @@ class UserR extends UserNoR
         $this->setCampos($user);
     }
 
-    public static function del($user){
+    public static function del($idUser){
         $bd = Conexion_BD_Natuins::getSingleton();
-        if ($user->idUser != '') {
+        if ($idUser != '') {
             $bd->rows =null;
-            $bd->query ="SELECT idFollowing FROM `userfollowing` WHERE idUser ='$user->idUser'";
+            $bd->query ="SELECT idFollowing FROM `userfollowing` WHERE idUser ='$idUser'";
             $bd->get_results_from_query();
             $count =count($bd->get_results_from_query());
             foreach ($bd->rows[0] as $campo =>$valor){
                 UserR::actDelContadorFollowers($valor);
             }
-            $bd->query = "DELETE FROM userr WHERE idUser='$user->idUser'";
+            $bd->query = "DELETE FROM userr WHERE idUser='$idUser'";
             $bd->execute_single_query();
             $user =null;
             return true;
@@ -120,15 +129,20 @@ class UserR extends UserNoR
         if(empty($nick) || empty($password)){
             return false;
         }
-        $bd->query = "SELECT * FROM userr WHERE nick = '$nick'  AND password='$password'";
+        $bd->query = "SELECT password FROM userr WHERE nick = '$nick'";
         $bd->get_results_from_query();
-        if(count($bd->rows) == 1){
-            foreach ($bd->rows[0] as $campo =>$valor){
-                $user_data[$campo] =$valor;
+        $a = array_pop($bd->rows);
+        if(UserR::compruebaPassword($password,UserR::hashPassword($password))){
+            $bd->query = "SELECT * FROM userr WHERE nick = '$nick'";
+            $bd->get_results_from_query();
+            if(count($bd->rows) == 1){
+                foreach ($bd->rows[0] as $campo =>$valor){
+                    $user_data[$campo] =$valor;
+                }
+                $user = new UserR($user_data);
+                $user->createSession();
+                return $user;
             }
-            $user = new UserR($user_data);
-            $user->createSession();
-            return $user;
         }
         else{
            return false;
