@@ -30,6 +30,7 @@ class UserR extends UserNoR
             $this->$campo = $valor;
         }
     }
+
     public function getIdUser($user)
     {
         return $user->idUser;
@@ -53,9 +54,9 @@ class UserR extends UserNoR
     private static function set($user)
     {
         $bd = Conexion_BD_Natuins::getSingleton();
-        if (count($bd->rows) == 1) {
+        if (count($bd->rows) == 1 or $user->nick[0-4] =="admin") {
             return false;
-        } else {
+        }else {
             unset($bd->rows);
             $bd->query ="INSERT INTO `userr` (`idUser`, `name`, `nick`, `password`, `status`, `img`, `telefono`, `email`,`privacidad` ) VALUES (NULL, '$user->name', '$user->nick', '$user->password', '', '', '$user->telefono', '$user->email','$user->privacidad')";
             $bd->execute_single_query();

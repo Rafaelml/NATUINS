@@ -9,6 +9,7 @@ require_once "../base/config.php";
 require_once "../base/Conexion_BD_Natuins.php";
 class UserNoR
 {
+
     public static function viewTuins()
     {
         $tuin =null;

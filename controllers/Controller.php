@@ -2,6 +2,7 @@
 
 require_once  '../models/UserNoR.php';
 require_once  '../models/UserR.php';
+require_once  '../models/Admin.php';
 
 class Controller{
     private $user;
@@ -76,7 +77,7 @@ class Controller{
         return $bool;
     }*/
 
-    public static function cargarWeb(){
+public static function cargarWeb(){
         header("Location: views/inicio.php");
     }
 
@@ -86,7 +87,13 @@ class Controller{
         if ($nick != null) {
             echo 'El nick insertado ya está en uso. Por favor pruebe con otro';
             exit();
-        } elseif ($email != null) {
+
+        } elseif (substr($user_data['nick'], 0, 5) =='admin'){
+            echo 'La palabra admin al inicio del usuario está reservada para los administradores.';
+            echo 'Por favor pruebe con otro nick';
+            exit();
+
+        }elseif ($email != null) {
             echo 'El email insertado ya está en uso. Por favor pruebe con otro';
             exit();
         } else {
@@ -99,15 +106,57 @@ class Controller{
             }
         }
     }
+    public static function delUser($userdel){
+        $user_data =array('idUser'=>$userdel);
+        $user =UserR::crea($user_data);
+        UserR::del($user);
+        header('Location: ../views/index2.php?$opcion=adminUser');
+    }
 
+    public static function obtUsers(){
+        $ver =Admin::viewUsers();
+        $cont =count($ver);
+        $mostrar ="";
+        for ($i = 0; $i < $cont; $i++) {
+            $a =$ver[$i]["name"];
+            $b =$ver[$i]["nick"];
+            $c =$ver[$i]["email"];
+            $mostrar.= '<div id="tuin">';
+            $mostrar.="Nombre: ";
+            $mostrar.=$a;
+            $mostrar.="<br/>";
+            $mostrar.="Nick: ";
+            $mostrar.=$b;
+            $mostrar.=" Email: ";
+            $mostrar.=$c;
+            $mostrar .='<form action="../controllers/ControllerUser.php?$userdel='.$b.'" method="POST">
+            <button type="submit">Eliminar</button></form></div>';
+        }
+        return $mostrar;
+    }
+    private static function cominit($nick){
+        $bool =true;
+        $a =substr($nick, 0, 5);
+        if($a =="admin"){
+            $bool =false;
+        }
+        return $bool;
+    }
     public static function login($nick,$pass,$cont){
-        $user =UserR::init_Session($nick,$pass);
+        if(Controller::cominit($nick)){
+            $user =UserR::init_Session($nick,$pass);
+        }
+        else {
+                $cont->user = Admin::init_Session($nick,$pass);
+                $cont->user->init_Session($nick, $pass);
+        }
         if($user){
             $cont->user =$user;
         }
         header('Location: ../views/index2.php');
     }
     public static function logout($cont){
+        $user_data =array();
         UserR::closeSession();
         $cont->user = new UserNoR();
         header('location: ../views/inicio.php');

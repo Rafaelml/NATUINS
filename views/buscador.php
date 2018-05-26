@@ -36,7 +36,7 @@ require_once("../models/UserNoR.php");
 			<?php include ('body/cabecera.php'); ?>
 			
 			<?php include ('body/navegador.php'); ?>
-		</div>
+
 
 		<?php include ('body/sidebarIzq.php'); ?>
 

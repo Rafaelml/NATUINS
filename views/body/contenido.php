@@ -14,8 +14,16 @@
 	        echo Controller::viewTuins();
 	    }
 	    elseif($_SESSION['tipo'] == 'admin'){
-
-        }
+            echo '<h1>Administrar Usuarios</h1>';
+            echo Controller::obtUsers();
+            echo '<form action="../controllers/controllerCantantes.php" method="POST">
+                    <fieldset><legend>Agregar usuarios</legend>
+                    <p><label>Nombre:</label> <input type="text" name="username" /></p>
+                    <p><label>Email:</label> <input type="text" name="email" /></p>
+                    <button type="submit">Agregar</button>
+                    </fieldset>
+                    </form>';
+	    }
 	}
 	    else{
             echo'<div id="tuins">';
