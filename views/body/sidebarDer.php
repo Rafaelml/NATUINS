@@ -9,4 +9,5 @@
 	}
     ?>
 
+    <a href="nosotros.php">Sobre nosotros</a>
 </div>
