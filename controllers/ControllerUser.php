@@ -6,10 +6,12 @@
  * Time: 23:46
  */
 require_once ("Controller.php");
+
+$userdel = $_REQUEST['usuarios'];
 if(!isset($_SESSION)){
     session_start();
 }
-if(isset($_REQUEST['$userdel'])){
-    $name = htmlspecialchars(trim(strip_tags($_REQUEST['$userdel'])));
+if(isset($userdel)){
+    $name = htmlspecialchars(trim(strip_tags($userdel)));
     $controller->delUser($name);
 }

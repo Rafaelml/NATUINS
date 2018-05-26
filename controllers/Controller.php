@@ -117,21 +117,23 @@ public static function cargarWeb(){
         $ver =Admin::viewUsers();
         $cont =count($ver);
         $mostrar ="";
+        $mostrar .= '<form action="../controllers/ControllerUser.php" method="POST">';
+        $mostrar .= '<select name="usuarios">';
         for ($i = 0; $i < $cont; $i++) {
             $a =$ver[$i]["name"];
             $b =$ver[$i]["nick"];
             $c =$ver[$i]["email"];
-            $mostrar.= '<div id="tuin">';
-            $mostrar.="Nombre: ";
-            $mostrar.=$a;
-            $mostrar.="<br/>";
-            $mostrar.="Nick: ";
-            $mostrar.=$b;
-            $mostrar.=" Email: ";
-            $mostrar.=$c;
-            $mostrar .='<form action="../controllers/ControllerUser.php?$userdel='.$b.'" method="POST">
-            <button type="submit">Eliminar</button></form></div>';
+            $mostrar .= '<div id="tuin">';
+            //$mostrar.="Nombre: ";
+            //$mostrar.=$a;
+            //$mostrar.="<br/>";
+            $mostrar .= "Nick: ";
+            $mostrar .= '<option value="' . $b . '">' . $b . '</option>';
+           // echo '<form action="../controllers/ControllerUser.php?$userdel='.$b.'" method="POST">
+            $mostrar .= '<button type="submit">Eliminar</button>';
         }
+        $mostrar .= '</form>';
+        $mostrar .= '</div>';
         return $mostrar;
     }
     private static function cominit($nick){
