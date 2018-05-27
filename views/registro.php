@@ -22,7 +22,7 @@
 				<legend>Registro</legend>
                 <div id="name">
                     Nombre:
-                    <input type="text" name="name" id="campoUser" />
+                    <input type="text" name="name"  />
                 </div>
 				<div id="nick">
 					Nick:
@@ -39,6 +39,8 @@
 				<div id="recontra">
 					Repetir contraseña:
 					<input type="password" name="repass" id="repass">
+                    <img id="passOK" src="img/ok.png" />
+                    <img id="passMal" src="img/nook.png" />
 				</div>
 
 				<div id="email">

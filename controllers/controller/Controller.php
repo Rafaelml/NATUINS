@@ -121,14 +121,13 @@ public static function cargarWeb(){
         $mostrar .= '<select name="usuarios">';
         for ($i = 0; $i < $cont; $i++) {
             $b =$ver[$i]["nick"];
-            $mostrar .= '<div id="tuin">';
             $mostrar .= "Nick: ";
             $mostrar .= '<option value="' . $b . '">' . $b . '</option>';
         }
         $mostrar.="</select>";
         $mostrar.="<button type='submit'>Eliminar</button>";
         $mostrar .= '</form>';
-        $mostrar .= '</div>';
+        $mostrar .='<div id="">';
         return $mostrar;
     }
     private static function cominit($nick){
