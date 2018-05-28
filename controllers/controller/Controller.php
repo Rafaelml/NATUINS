@@ -181,26 +181,21 @@ public static function cargarWeb(){
         }
         return $a;
     }
-    public static function viewYourTuins(){
-        session_start();
+    public static function viewYourTuins($idUser){
         $mostrar ="";
-        $usuario =new UserNoR();
-        $tuins = $usuario->viewTuins();
-        $nickuser = $_SESSION['usuario'];
-
+        $tuins = UserR::viewYourTuins($idUser);
         if($tuins != null) {
             $cont = 4;
             if ($cont > count($tuins)){
                 $cont =count($tuins);
             }
             for ($i = 0; $i < $cont; $i++) {
-                if($nickuser == $tuins[$i]["0"]){
-                    $mostrar .='<div id="tuin">';
-                    $mostrar .= '<p>' . $tuins[$i]["tuin"] . '</p>';
-                    $mostrar .='</div>';
-                }
+                $mostrar .='<div id="tuin">';
+                $mostrar .= '<p>' . $tuins[$i]["tuin"] . '</p>';
+                $mostrar .='</div>';
             }
         }
+
         return $mostrar;
     }
 }

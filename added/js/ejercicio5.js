@@ -31,10 +31,8 @@ $(document).ready(function() {
 	$("#campoEmail").change(function(){
 
 		if (correoValido($("#campoEmail").val() ) ) {
-
-			$("#correoMal").hide();
-			$("#correoOK").show();
-
+            var url = "../controllers/comprobarMailUsuario.php?email=" + $("#campoEmail").val();
+			var a =$.get(url,correoExiste)
 		} else {
 
 			$("#correoMal").show();
@@ -48,26 +46,27 @@ $(document).ready(function() {
 		$.get(url,usuarioExiste);
     });
 
-	function correoValido(/*data,*/correo) {
+	function correoValido(correo) {
 
 		var arroba = correo.indexOf("@");
 		correo = correo.substring(arroba,correo.length);
 		var punto = correo.indexOf(".");
 		correo = correo.substring(punto + 1,correo.length);
-
-		/*if(data == "existe"){
-			$("#correoMal").show();
-			$("#correoOK").hide();
-			alert("El mail ya existe, escoge otro");
-		}
-
-		else if (data == "disponible"){
-			$("#correoMal").hide();
-			$("#correoOK").show();
-		}*/
-
 		return ( arroba > 0 && punto > 1 && correo.length > 0);
 	}
+	function correoExiste(data,status) {
+        if(data == "existe"){
+            $("#correoMal").show();
+            $("#correoOK").hide();
+            $("#campoEmail").focus(); //Devuelvo el foco//
+            alert("El mail ya existe, escoge otro");
+        }
+
+        else{
+            $("#correoOK").show();
+            $("#correoMal").hide();
+        }
+    }
 
 	function usuarioExiste(data,status) {
 

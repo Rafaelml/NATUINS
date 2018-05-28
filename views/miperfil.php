@@ -34,9 +34,14 @@
 
 		    <div id="tuins">
 		<?php
-		    	require_once ("../controllers/Controller.php");
-		        echo Controller::viewYourTuins();
-		?>
+		    	require_once ("../controllers/controller/Controller.php");
+		    	if(!isset($_SESSION)){
+                    session_start();
+                }
+                if(isset($_SESSION['idUser'])){
+                    echo Controller::viewYourTuins($_SESSION['idUser']);
+                }
+        ?>
 			</div>
 
 		</div>

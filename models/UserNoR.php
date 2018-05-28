@@ -27,7 +27,7 @@ class UserNoR
         }
         return $tuin;
     }
-    private  static function  getNick($idUser = "")
+    protected  static function  getNick($idUser = "")
     {
         $nick="";
         if ($idUser != "") {

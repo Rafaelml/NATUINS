@@ -238,5 +238,22 @@ class UserR extends UserNoR
         }
         return $bool;
     }
+    public static function viewYourTuins($idUser)
+    {
+        $tuin =null;
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query = "SELECT tuin , idUser FROM tuin WHERE idUser ='$idUser'";
+        $bd->get_results_from_query();
+        $contador = count($bd->rows);
+        $temp =0;
+        for ($i = $contador; $i >= 1; $i--) {
+            $tuins = $bd->rows[$i-1];
+            $nick = UserR::getNick($tuins["idUser"]);
+            array_push($tuins, $nick);
+            $tuin[$temp] =$tuins;
+            $temp++;
+        }
+        return $tuin;
+    }
 }
 ?>
