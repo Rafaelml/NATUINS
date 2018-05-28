@@ -1,9 +1,3 @@
-<?php
-
-require_once("../models/UserNoR.php");
-
-?>
-
 <!DOCTYPE html>
 <html>
 <head>

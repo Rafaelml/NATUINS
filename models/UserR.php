@@ -13,6 +13,7 @@ class UserR extends UserNoR
     private $nick;
     private $password;
     private $status;
+    private $telefono;
     private $email;
     private $message;
     private $privacidad;
@@ -30,23 +31,45 @@ class UserR extends UserNoR
             $this->$campo = $valor;
         }
     }
+    public static function getUser($idUser){
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT * FROM userr WHERE idUser='$idUser'";
+        $bd->rows =null;
+        $bd->get_results_from_query();
+        $user_data =array();
+        $user_data2 =array();
+        foreach ($bd->rows[0] as $campo =>$valor){
+           $user_data[$campo] =$valor;
+        }
+        $user =new UserR($user_data);
+        return $user;
+    }
 
-    public function getIdUser($user)
+    public static function getIdUser($user)
     {
         return $user->idUser;
     }
 
-    public function getName($user)
+    public static function getName($user)
     {
         return $user->name;
     }
 
-    public function getStatus($user)
+    public static function getNick2($user)
+    {
+        return $user->nick;
+    }
+
+    public static function getStatus($user)
     {
         return $user->status;
     }
+    public static function getTelefono($user)
+    {
+        return $user->telefono;
+    }
 
-    public function getMessage($user)
+    public static function getMessage($user)
     {
         return $user->message;
     }
@@ -84,25 +107,31 @@ class UserR extends UserNoR
 
     private function setCampos($user){
         $bd = Conexion_BD_Natuins::getSingleton();
-        $bd->query = "UPDATE `userr` SET `nick` = '$user->nick', `pass` = '$user->password', `email` = '$user->email', `telefono` = '$user->email' WHERE `userr`.`idUser` = $user->idUser;";
+        $bd->query = "UPDATE `userr` SET `name` = '$user->name', `nick` = '$user->nick', `password` = '$user->password', `status` = '$user->status',`img` = '$user->img',`telefono` = '$user->telefono',`email` = '$user->email',`privacidad` = '$user->privacidad' WHERE `userr`.`idUser` = $user->idUser";
         $bd->execute_single_query();
     }
-    public function setName($name , $user)
+    public static function setName($name , $user)
     {
         $user->name =$name;
-        $this->setCampos($user);
+        $user->setCampos($user);
     }
 
-    public function settNick($nick,$user)
+    public static function settNick($nick,$user)
     {
-        $user->name =$nick;
-        $this->setCampos($user);
+        $user->nick =$nick;
+        $user->setCampos($user);
     }
 
-    public function settStatus($status,$user)
+    public static function settTelefono($telefono,$user)
     {
-        $user->name =$status;
-        $this->setCampos($user);
+        $user->telefono =$telefono;
+        $user->setCampos($user);
+    }
+
+    public static function settStatus($status,$user)
+    {
+        $user->status =$status;
+        $user->setCampos($user);
     }
 
     public static function del($idUser){

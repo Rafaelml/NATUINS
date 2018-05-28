@@ -41,6 +41,22 @@ class Controller{
         return $mostrar;
     }
 
+    public static function updateName($name,$user){
+        UserR::setName($name,$user);
+    }
+
+    public static function updateStatus($status,$user){
+        UserR::settStatus($status,$user);
+    }
+
+    public static function updatePass($pass,$user){
+        UserR::setPass($pass,$user);
+    }
+
+    public static function updateTelefono($telefono,$user){
+        UserR::settTelefono($telefono,$user);
+    }
+
     public static function actFollowing($idUser ,$idUser_a_Seguir){
         if(!UserR::existFollowing($idUser,$idUser_a_Seguir)){
             UserR::addFollowings($idUser,$idUser_a_Seguir);
@@ -67,17 +83,9 @@ class Controller{
         return $bool;
     }
 
-    /*public static function comprobarPass($password, $password2){
-        $bool =false;
 
-        if($password == $password2){
-         $bool =true;
-        }
 
-        return $bool;
-    }*/
-
-public static function cargarWeb(){
+    public static function cargarWeb(){
         header("Location: views/inicio.php");
     }
 
@@ -197,6 +205,29 @@ public static function cargarWeb(){
         }
 
         return $mostrar;
+    }
+    public static function getUser($idUser){
+        return UserR::getUser($idUser);
+    }
+
+    public static function getName($user){
+        return UserR::getName($user);
+    }
+
+    public static function getNick($user){
+        return UserR::getNick2($user);
+    }
+
+    public static function getStatus($user){
+        return UserR::getStatus($user);
+    }
+
+    public static function getTelefono($user){
+        return UserR::getTelefono($user);
+    }
+
+    public static function getImg($user){
+        return UserR::getImg($user);
     }
 }
 ?>

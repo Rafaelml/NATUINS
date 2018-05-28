@@ -27,7 +27,7 @@ class UserNoR
         }
         return $tuin;
     }
-    protected  static function  getNick($idUser = "")
+    protected  static function getNick($idUser = "")
     {
         $nick="";
         if ($idUser != "") {
@@ -40,6 +40,7 @@ class UserNoR
             return $nick['nick'];
         }
     }
+
     public static function closeSession(){
         session_start();
         $_SESSION = array();
