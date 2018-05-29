@@ -115,17 +115,26 @@ class Controller{
         }
     }
     public static function delUser($userdel){
+<<<<<<< HEAD
         $user_data =array('idUser'=>$userdel);
         $user =UserR::crea($user_data);
         UserR::del($user);
         header('Location: ../views/index2.php?$opcion=adminUser');
+=======
+        $idUser =UserNoR::get($userdel);
+        UserR::del($idUser);
+>>>>>>> master
     }
 
     public static function obtUsers(){
         $ver =Admin::viewUsers();
         $cont =count($ver);
         $mostrar ="";
+<<<<<<< HEAD
         $mostrar .= '<form action="../ControllerUser.php" method="POST">';
+=======
+        $mostrar .= '<form action="../controllers/ControllerUser.php" method="POST">';
+>>>>>>> master
         $mostrar .= '<select name="usuarios">';
         for ($i = 0; $i < $cont; $i++) {
             $b =$ver[$i]["nick"];
@@ -193,10 +202,14 @@ class Controller{
         $mostrar ="";
         $tuins = UserR::viewYourTuins($idUser);
         if($tuins != null) {
+<<<<<<< HEAD
             $cont = 4;
             if ($cont > count($tuins)){
                 $cont =count($tuins);
             }
+=======
+            $cont =count($tuins) - 1;
+>>>>>>> master
             for ($i = 0; $i < $cont; $i++) {
                 $mostrar .='<div id="tuin">';
                 $mostrar .= '<p>' . $tuins[$i]["tuin"] . '</p>';
@@ -229,5 +242,16 @@ class Controller{
     public static function getImg($user){
         return UserR::getImg($user);
     }
+<<<<<<< HEAD
+=======
+
+    public static function getFollowers($user){
+        return UserR::getFollowers($user);
+    }
+
+    public static function getFollowings($user){
+        return UserR::getFollowings($user);
+    }
+>>>>>>> master
 }
 ?>

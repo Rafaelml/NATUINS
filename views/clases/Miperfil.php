@@ -1,10 +1,14 @@
 <?php
+<<<<<<< HEAD
 /**
  * Created by PhpStorm.
  * User: rafael
  * Date: 28/5/18
  * Time: 17:44
  */
+=======
+
+>>>>>>> master
 require_once ("../controllers/controller/Controller.php");
 class Miperfil
 {
@@ -59,15 +63,37 @@ class Miperfil
         echo Controller::getStatus($user);
         echo "</p>";
 
+<<<<<<< HEAD
+=======
+        echo "<p>Telefono: ";
+        echo Controller::getTelefono($user);
+        echo "</p>";
+
+>>>>>>> master
         echo '<div><form action="miperfil.php?opcion=editarperfil" method="POST">
             <button type="submit">Editar Perfil</button></form></div>';
         echo "</div>";
     }
+<<<<<<< HEAD
     public function der($idUser){
         echo"<div id='sidebar-right'>";
         echo"Seguidores";
         echo "seguidos";
 	        echo Controller::viewPersonasDestacadasRegistrado($idUser);
+=======
+    public function der($idUser, $user){
+        echo"<div id='sidebar-right'>";
+        echo '<ul>
+                <li>Seguidores:';
+        echo Controller:: getFollowers($user);
+        echo"</li>";
+        echo '<li>Seguidos:';
+        echo Controller:: getFollowings($user);
+        echo"</li>";
+        echo '</ul>';
+	    echo Controller::viewPersonasDestacadasRegistrado($idUser);
+        echo"</div>";
+>>>>>>> master
     }
     public function navegador(){
         echo'

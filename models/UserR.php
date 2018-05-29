@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rafael
- * Date: 11/4/18
- * Time: 17:37
- */
+
 require_once ("../base/Conexion_BD_Natuins.php");
 class UserR extends UserNoR
 {
@@ -17,9 +12,15 @@ class UserR extends UserNoR
     private $email;
     private $message;
     private $privacidad;
+<<<<<<< HEAD
     //protected $followers;
     //protected $followings;
+=======
+    private $contFollowers;
+    private $contFollowings;
+>>>>>>> master
     //protected Tuins $numtuins;
+
     public static function crea($user_data = array())
     {
         $user = new UserR($user_data);
@@ -69,9 +70,27 @@ class UserR extends UserNoR
         return $user->telefono;
     }
 
+<<<<<<< HEAD
+=======
+    public static function getTelefono($user)
+    {
+        return $user->telefono;
+    }
+
+>>>>>>> master
     public static function getMessage($user)
     {
         return $user->message;
+    }
+
+    public static function getFollowers($user)
+    {
+        return $user->contFollowers;
+    }
+
+    public static function getFollowings($user)
+    {
+        return $user->contFollowings;
     }
 
     private static function set($user)
@@ -114,6 +133,7 @@ class UserR extends UserNoR
     {
         $user->name =$name;
         $user->setCampos($user);
+<<<<<<< HEAD
     }
 
     public static function settNick($nick,$user)
@@ -134,13 +154,34 @@ class UserR extends UserNoR
         $user->setCampos($user);
     }
 
+=======
+    }
+
+    public static function settNick($nick,$user)
+    {
+        $user->nick =$nick;
+        $user->setCampos($user);
+    }
+
+    public static function settTelefono($telefono,$user)
+    {
+        $user->telefono =$telefono;
+        $user->setCampos($user);
+    }
+
+    public static function settStatus($status,$user)
+    {
+        $user->status =$status;
+        $user->setCampos($user);
+    }
+
+>>>>>>> master
     public static function del($idUser){
         $bd = Conexion_BD_Natuins::getSingleton();
         if ($idUser != '') {
             $bd->rows =null;
             $bd->query ="SELECT idFollowing FROM `userfollowing` WHERE idUser ='$idUser'";
             $bd->get_results_from_query();
-            $count =count($bd->get_results_from_query());
             foreach ($bd->rows[0] as $campo =>$valor){
                 UserR::actDelContadorFollowers($valor);
             }
