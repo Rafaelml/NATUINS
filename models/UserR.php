@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rafael
- * Date: 11/4/18
- * Time: 17:37
- */
+
 require_once ("../base/Conexion_BD_Natuins.php");
 class UserR extends UserNoR
 {
@@ -17,9 +12,10 @@ class UserR extends UserNoR
     private $email;
     private $message;
     private $privacidad;
-    //protected $followers;
-    //protected $followings;
+    private $contFollowers;
+    private $contFollowings;
     //protected Tuins $numtuins;
+
     public static function crea($user_data = array())
     {
         $user = new UserR($user_data);
@@ -64,6 +60,7 @@ class UserR extends UserNoR
     {
         return $user->status;
     }
+
     public static function getTelefono($user)
     {
         return $user->telefono;
@@ -72,6 +69,16 @@ class UserR extends UserNoR
     public static function getMessage($user)
     {
         return $user->message;
+    }
+
+    public static function getFollowers($user)
+    {
+        return $user->contFollowers;
+    }
+
+    public static function getFollowings($user)
+    {
+        return $user->contFollowings;
     }
 
     private static function set($user)

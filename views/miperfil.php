@@ -25,5 +25,5 @@
     $perfil->navegador();
     $perfil->izq($user);
     $perfil->contenido($opcion,$user_data,$user);
-    $perfil->der($_SESSION['idUser']);
+    $perfil->der($_SESSION['idUser'], $user);
     echo '</div>';
