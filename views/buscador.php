@@ -37,7 +37,7 @@
 
 		<div id="contenido">
 
-			<form action="../controllers/resultados.php" method="GET">
+			<form action="llamadaResultados.php" method="GET">
 
 				<h3>Buscar </h3>
 				<input onkeyup="activar_boton()" id="texto_a_rellenar" type="text" name="caja">
