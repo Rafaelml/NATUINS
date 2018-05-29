@@ -80,6 +80,18 @@ div#sidebar-right{
 	float: right;
 }
 
+div#sidebar-right ul{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		
+	}
+		div#sidebar-right ul li{
+			display: inline-block;
+			line-height: 80px;
+			padding-right:100px;
+		}
+
 div#pie{
 
 	padding: 100px 10px 10px 10px;

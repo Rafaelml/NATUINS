@@ -229,5 +229,13 @@ class Controller{
     public static function getImg($user){
         return UserR::getImg($user);
     }
+
+    public static function getFollowers($user){
+        return UserR::getFollowers($user);
+    }
+
+    public static function getFollowings($user){
+        return UserR::getFollowings($user);
+    }
 }
 ?>
