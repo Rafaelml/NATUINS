@@ -115,17 +115,15 @@ class Controller{
         }
     }
     public static function delUser($userdel){
-        $user_data =array('idUser'=>$userdel);
-        $user =UserR::crea($user_data);
-        UserR::del($user);
-        header('Location: ../views/index2.php?$opcion=adminUser');
+        $idUser =UserNoR::get($userdel);
+        UserR::del($idUser);
     }
 
     public static function obtUsers(){
         $ver =Admin::viewUsers();
         $cont =count($ver);
         $mostrar ="";
-        $mostrar .= '<form action="../ControllerUser.php" method="POST">';
+        $mostrar .= '<form action="../controllers/ControllerUser.php" method="POST">';
         $mostrar .= '<select name="usuarios">';
         for ($i = 0; $i < $cont; $i++) {
             $b =$ver[$i]["nick"];
@@ -193,10 +191,7 @@ class Controller{
         $mostrar ="";
         $tuins = UserR::viewYourTuins($idUser);
         if($tuins != null) {
-            $cont = 4;
-            if ($cont > count($tuins)){
-                $cont =count($tuins);
-            }
+            $cont =count($tuins) - 1;
             for ($i = 0; $i < $cont; $i++) {
                 $mostrar .='<div id="tuin">';
                 $mostrar .= '<p>' . $tuins[$i]["tuin"] . '</p>';

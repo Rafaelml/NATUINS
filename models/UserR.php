@@ -140,7 +140,6 @@ class UserR extends UserNoR
             $bd->rows =null;
             $bd->query ="SELECT idFollowing FROM `userfollowing` WHERE idUser ='$idUser'";
             $bd->get_results_from_query();
-            $count =count($bd->get_results_from_query());
             foreach ($bd->rows[0] as $campo =>$valor){
                 UserR::actDelContadorFollowers($valor);
             }
