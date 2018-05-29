@@ -150,6 +150,12 @@ class UserR extends UserNoR
             foreach ($bd->rows[0] as $campo =>$valor){
                 UserR::actDelContadorFollowers($valor);
             }
+            $bd->rows =null;
+            $bd->query ="SELECT idFollower FROM `userfollower` WHERE idUser ='$idUser'";
+            $bd->get_results_from_query();
+            foreach ($bd->rows[0] as $campo =>$valor){
+                UserR::actDelContadorFollowings($valor);
+            }
             $bd->query = "DELETE FROM userr WHERE idUser='$idUser'";
             $bd->execute_single_query();
             $user =null;
