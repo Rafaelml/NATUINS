@@ -16,16 +16,21 @@ div#cabecera a{
 div#contenedor{
 	width: 1320px;
 	margin: auto;
-	/*border: 1px solid red;*/
-	/*background-color: #AAAAAA;*/
 	margin-top: 30px;
 }
 
 div#logo{
 	float: left;
+	height: 85px;
 	padding: 15px 0 0 20px;
 	text-decoration: none;
-}
+}	
+	div#logo h1 a{
+
+	text-decoration: none;
+	color: black;
+
+	}
 
 div#interUsuario{
 	text-align: center;

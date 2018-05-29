@@ -1,6 +1,6 @@
 <?php
 
-require_once ("Controller.php");
+require_once ("controller/Controller.php");
 
 	if(Controller::comprobarMail($_REQUEST["email"])){
 		     ob_end_clean();

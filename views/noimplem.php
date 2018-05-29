@@ -6,6 +6,6 @@
 </head>
 <body>
 <p>Está parte todavía no ha sido implementada.</p>
-<a href="inicio.php">Volver atrás</a>
+<a href="index2.php">Volver atrás</a>
 </body>
 </html>

@@ -19,7 +19,7 @@
 			require("body/navegador.php");
 			require("body/sidebarIzq.php");
 			require("body/contenido.php");
-			require("body/sidebarDer.html");
+			require("body/sidebarDer.php");
 		?>
 
 	</div>

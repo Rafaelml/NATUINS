@@ -1,9 +1,3 @@
-<?php
-
-require_once("../models/UserNoR.php");
-
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +30,7 @@ require_once("../models/UserNoR.php");
 			<?php include ('body/cabecera.php'); ?>
 			
 			<?php include ('body/navegador.php'); ?>
-		</div>
+
 
 		<?php include ('body/sidebarIzq.php'); ?>
 
@@ -53,7 +47,7 @@ require_once("../models/UserNoR.php");
 
 		</div>
 
-		<?php include('body/sidebarDer.html'); ?>
+		<?php include('body/sidebarDer.php'); ?>
 
 	</div>
 </body>

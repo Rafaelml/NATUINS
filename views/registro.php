@@ -20,6 +20,10 @@
 		<form action="../controllers/controllerRegistro.php" method="post">
 			<fieldset>
 				<legend>Registro</legend>
+                <div id="name">
+                    Nombre:
+                    <input type="text" name="name"  />
+                </div>
 				<div id="nick">
 					Nick:
 					<input type="text" name="nick" id="campoUser" />
@@ -35,8 +39,8 @@
 				<div id="recontra">
 					Repetir contraseña:
 					<input type="password" name="repass" id="repass">
-					<img id="repassOK" src="img/ok.png" />
-					<img id="repassMal" src="img/nook.png" />
+                    <img id="passOK" src="img/ok.png" />
+                    <img id="passMal" src="img/nook.png" />
 				</div>
 
 				<div id="email">
@@ -50,6 +54,12 @@
 					Teléfono:
 					<input type="text" name="tel">
 				</div>
+                <div id="privacidad">
+                    Privada:
+                    <input type="radio" name="privacidad" id="privacidad" value="privada">
+                    Pública:
+                    <input type="radio" name="privacidad" id="publica" value="publica">
+                </div>
 
 				<input type="submit" name="registro" value="Registro" />
 				<button type="reset">Borrar</button>
@@ -58,7 +68,7 @@
 
 		</div>
 
-		<?php include('body/sidebarDer.html'); ?>
+		<?php include('body/sidebarDer.php'); ?>
 
 	</div>
 	</body>

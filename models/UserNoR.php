@@ -9,6 +9,7 @@ require_once "../base/config.php";
 require_once "../base/Conexion_BD_Natuins.php";
 class UserNoR
 {
+
     public static function viewTuins()
     {
         $tuin =null;
@@ -26,7 +27,7 @@ class UserNoR
         }
         return $tuin;
     }
-    private  static function  getNick($idUser = "")
+    protected  static function getNick($idUser = "")
     {
         $nick="";
         if ($idUser != "") {
@@ -39,6 +40,7 @@ class UserNoR
             return $nick['nick'];
         }
     }
+
     public static function closeSession(){
         session_start();
         $_SESSION = array();

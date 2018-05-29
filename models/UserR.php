@@ -13,8 +13,10 @@ class UserR extends UserNoR
     private $nick;
     private $password;
     private $status;
+    private $telefono;
     private $email;
     private $message;
+    private $privacidad;
     //protected $followers;
     //protected $followings;
     //protected Tuins $numtuins;
@@ -29,22 +31,45 @@ class UserR extends UserNoR
             $this->$campo = $valor;
         }
     }
-    public function getIdUser($user)
+    public static function getUser($idUser){
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT * FROM userr WHERE idUser='$idUser'";
+        $bd->rows =null;
+        $bd->get_results_from_query();
+        $user_data =array();
+        $user_data2 =array();
+        foreach ($bd->rows[0] as $campo =>$valor){
+           $user_data[$campo] =$valor;
+        }
+        $user =new UserR($user_data);
+        return $user;
+    }
+
+    public static function getIdUser($user)
     {
         return $user->idUser;
     }
 
-    public function getName($user)
+    public static function getName($user)
     {
         return $user->name;
     }
 
-    public function getStatus($user)
+    public static function getNick2($user)
+    {
+        return $user->nick;
+    }
+
+    public static function getStatus($user)
     {
         return $user->status;
     }
+    public static function getTelefono($user)
+    {
+        return $user->telefono;
+    }
 
-    public function getMessage($user)
+    public static function getMessage($user)
     {
         return $user->message;
     }
@@ -52,52 +77,74 @@ class UserR extends UserNoR
     private static function set($user)
     {
         $bd = Conexion_BD_Natuins::getSingleton();
-        if (count($bd->rows) == 1) {
+        if (count($bd->rows) == 1 or $user->nick[0-4] =="admin") {
             return false;
-        } else {
+        }else {
             unset($bd->rows);
-            $bd->query ="INSERT INTO `userr` (`idUser`, `name`, `nick`, `password`, `status`, `img`, `telefono`, `email`) VALUES (NULL, '', '$user->nick', '$user->password', '', '', '$user->telefono', '$user->email')";
+            $user->password =UserR::hashPassword($user->password);
+            $bd->query ="INSERT INTO `userr` (`idUser`, `name`, `nick`, `password`, `status`, `img`, `telefono`, `email`,`privacidad`) VALUES (NULL, '$user->name', '$user->nick', '$user->password', '', '', '$user->telefono', '$user->email','$user->privacidad')";
             $bd->execute_single_query();
             $user->idUser =$user->get($user->nick);
             $user->createSession();
             return $user;
         }
     }
+    private static function hashPassword($password)
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+    public function compruebaPassword($password,$hash)
+    {
+        return password_verify($password, $hash);
+    }
+    public static function viewDestacadosR($idUser){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->rows =null;
+        $bd->query ="SELECT * FROM `userr` WHERE `idUser` NOT IN (SELECT `idFollowing` FROM `userfollowing` WHERE `idUser` ='$idUser') AND `idUser` NOT IN ('$idUser') ORDER BY contFollowers DESC";
+        $bd->get_results_from_query();
+        return $bd->rows;
+    }
 
     private function setCampos($user){
         $bd = Conexion_BD_Natuins::getSingleton();
-        $bd->query = "UPDATE `userr` SET `nick` = '$user->nick', `pass` = '$user->password', `email` = '$user->email', `telefono` = '$user->email' WHERE `userr`.`idUser` = $user->idUser;";
+        $bd->query = "UPDATE `userr` SET `name` = '$user->name', `nick` = '$user->nick', `password` = '$user->password', `status` = '$user->status',`img` = '$user->img',`telefono` = '$user->telefono',`email` = '$user->email',`privacidad` = '$user->privacidad' WHERE `userr`.`idUser` = $user->idUser";
         $bd->execute_single_query();
     }
-    public function setName($name , $user)
+    public static function setName($name , $user)
     {
         $user->name =$name;
-        $this->setCampos($user);
+        $user->setCampos($user);
     }
 
-    public function settNick($nick,$user)
+    public static function settNick($nick,$user)
     {
-        $user->name =$nick;
-        $this->setCampos($user);
+        $user->nick =$nick;
+        $user->setCampos($user);
     }
 
-    public function settStatus($status,$user)
+    public static function settTelefono($telefono,$user)
     {
-        $user->name =$status;
-        $this->setCampos($user);
+        $user->telefono =$telefono;
+        $user->setCampos($user);
     }
 
-    public static function del($user){
+    public static function settStatus($status,$user)
+    {
+        $user->status =$status;
+        $user->setCampos($user);
+    }
+
+    public static function del($idUser){
         $bd = Conexion_BD_Natuins::getSingleton();
-        if ($user->idUser != '') {
+        if ($idUser != '') {
             $bd->rows =null;
-            $bd->query ="SELECT idFollowing FROM `userfollowing` WHERE idUser ='$user->idUser'";
+            $bd->query ="SELECT idFollowing FROM `userfollowing` WHERE idUser ='$idUser'";
             $bd->get_results_from_query();
             $count =count($bd->get_results_from_query());
             foreach ($bd->rows[0] as $campo =>$valor){
                 UserR::actDelContadorFollowers($valor);
             }
-            $bd->query = "DELETE FROM userr WHERE idUser='$user->idUser'";
+            $bd->query = "DELETE FROM userr WHERE idUser='$idUser'";
             $bd->execute_single_query();
             $user =null;
             return true;
@@ -111,15 +158,20 @@ class UserR extends UserNoR
         if(empty($nick) || empty($password)){
             return false;
         }
-        $bd->query = "SELECT * FROM userr WHERE nick = '$nick'  AND password='$password'";
+        $bd->query = "SELECT password FROM userr WHERE nick = '$nick'";
         $bd->get_results_from_query();
-        if(count($bd->rows) == 1){
-            foreach ($bd->rows[0] as $campo =>$valor){
-                $user_data[$campo] =$valor;
+        $a = array_pop($bd->rows);
+        if(UserR::compruebaPassword($password,UserR::hashPassword($password))){
+            $bd->query = "SELECT * FROM userr WHERE nick = '$nick'";
+            $bd->get_results_from_query();
+            if(count($bd->rows) == 1){
+                foreach ($bd->rows[0] as $campo =>$valor){
+                    $user_data[$campo] =$valor;
+                }
+                $user = new UserR($user_data);
+                $user->createSession();
+                return $user;
             }
-            $user = new UserR($user_data);
-            $user->createSession();
-            return $user;
         }
         else{
            return false;
@@ -214,6 +266,23 @@ class UserR extends UserNoR
             $bool=true;
         }
         return $bool;
+    }
+    public static function viewYourTuins($idUser)
+    {
+        $tuin =null;
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query = "SELECT tuin , idUser FROM tuin WHERE idUser ='$idUser'";
+        $bd->get_results_from_query();
+        $contador = count($bd->rows);
+        $temp =0;
+        for ($i = $contador; $i >= 1; $i--) {
+            $tuins = $bd->rows[$i-1];
+            $nick = UserR::getNick($tuins["idUser"]);
+            array_push($tuins, $nick);
+            $tuin[$temp] =$tuins;
+            $temp++;
+        }
+        return $tuin;
     }
 }
 ?>

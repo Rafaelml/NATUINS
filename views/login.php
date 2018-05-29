@@ -30,7 +30,7 @@
 
 		</div>
 
-		<?php include('body/sidebarDer.html');?>
+		<?php include('body/sidebarDer.php');?>
 
 	</div>
 	</body>
