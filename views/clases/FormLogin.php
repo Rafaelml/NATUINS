@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rafael
- * Date: 20/5/18
- * Time: 12:06
- */
+
 require_once __DIR__.'/Form.php';
 require_once __DIR__.'/Usuario.php';
 

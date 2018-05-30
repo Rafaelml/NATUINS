@@ -14,7 +14,7 @@ class UserNoR
     {
         $tuin =null;
         $bd = Conexion_BD_Natuins::getSingleton();
-        $bd->query = "SELECT tuin , idUser FROM tuin WHERE `idUser` NOT IN (SELECT `idUser` FROM `userr` WHERE `privacidad` ='1')";
+        $bd->query = "SELECT tuin , idUser FROM tuin";
         $bd->get_results_from_query();
         $contador = count($bd->rows);
         $temp =0;

@@ -1,15 +1,12 @@
 <?php
     require_once ("controller/Controller.php");
 	session_start();
-        $user =Controller::getUser($_REQUEST['$idUser']);
-        $b =Controller::getPrivacidad($user);
-	    if(Controller::getPrivacidad($user) ==1){
-            ob_end_clean();
-            echo "Es privado";º
+	    Controller::actFollowing($_SESSION['idUser'],$_REQUEST['$idUser']);
+	    if($_SESSION['pulsado'] ==false){
+            $_SESSION['pulsado'] = true;
         }
         else{
-            Controller::actFollowing($_SESSION['idUser'],$_REQUEST['$idUser']);
-	    }
-
+            $_SESSION['pulsado'] = false;
+        }
         header('Location: ../views/index2.php');
 ?>

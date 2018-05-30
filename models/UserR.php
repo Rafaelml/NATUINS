@@ -80,10 +80,6 @@ class UserR extends UserNoR
     {
         return $user->contFollowings;
     }
-    public static function getPrivacidad($user)
-    {
-        return $user->privacidad;
-    }
 
     private static function set($user)
     {
@@ -102,7 +98,7 @@ class UserR extends UserNoR
     }
     private static function hashPassword($password)
     {
-        return password_hash($password, PASSWORD_BCRYPT);
+        return password_hash($password, PASSWORD_DEFAULT);
     }
     public function compruebaPassword($password,$hash)
     {
@@ -177,8 +173,7 @@ class UserR extends UserNoR
         $bd->query = "SELECT password FROM userr WHERE nick = '$nick'";
         $bd->get_results_from_query();
         $a = array_pop($bd->rows);
-        $b =UserR::compruebaPassword($password,$a['password']);
-        if($b){
+        if(UserR::compruebaPassword($password,UserR::hashPassword($password))){
             $bd->query = "SELECT * FROM userr WHERE nick = '$nick'";
             $bd->get_results_from_query();
             if(count($bd->rows) == 1){
@@ -278,7 +273,6 @@ class UserR extends UserNoR
         $bd = Conexion_BD_Natuins::getSingleton();
         $bool =false;
         $bd->query ="SELECT * FROM `userfollowing` WHERE idUser ='$idUser' AND idFollowing = '$idUser_a_Seguir'";
-        $bd->rows =null;
         $bd->get_results_from_query();
         if($bd->rows){
             $bool=true;

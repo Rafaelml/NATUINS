@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Buscador</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/inicio.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
-	<title>Buscador</title>
-
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script src="../added/js/jquery-3.3.1.min.js"></script>
+	<script src="../added/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 
@@ -41,7 +42,7 @@
 
 				<h3>Buscar </h3>
 				<input onkeyup="activar_boton()" id="texto_a_rellenar" type="text" name="caja">
-				<button id="submit" disabled>Buscar</button>
+				<button id="submit" class="btn btn-primary" disabled>Buscar</button>
 
 			</form>
 
