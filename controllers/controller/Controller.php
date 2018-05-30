@@ -183,7 +183,7 @@ class Controller{
         for($i =0;$i<$count;$i++){
             $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
             $a .='<div><form action="../controllers/seguir.php?$idUser='.$dest[$i]['idUser'].'" method="POST">
-            <button type="submit">Seguir</button></form></div>';
+            <button  type="submit">Seguir</button></form></div>';
         }
         return $a;
     }
@@ -231,6 +231,9 @@ class Controller{
 
     public static function getFollowings($user){
         return UserR::getFollowings($user);
+    }
+    public static function getPrivacidad($user){
+        return UserR::getPrivacidad($user);
     }
 }
 ?>

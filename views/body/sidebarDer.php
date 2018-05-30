@@ -8,6 +8,24 @@
 	    echo Controller::viewPersonasDestacadas();
 	}
     ?>
-
     <a href="nosotros.php">Sobre nosotros</a>
+    <script>
+        function realizaProceso(idUser){
+            var parametros = {
+                "idUser" : idUser
+            };
+            $.ajax({
+                data:  parametros,
+                url:   '../controllers/seguir.php',
+                type:  'post',
+                beforeSend: function () {
+                    $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                    $("#idUser").html(response);
+                }
+            });
+        }
+    </script>
+
 </div>

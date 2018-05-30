@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: rafael
+ * Date: 11/4/18
+ * Time: 17:37
+ */
 require_once ("../base/Conexion_BD_Natuins.php");
 class Admin extends UserNoR
 {
