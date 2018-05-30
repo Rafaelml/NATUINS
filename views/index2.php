@@ -9,6 +9,9 @@
 <head>
 	<title>Index</title>
 	<meta charset="utf-8">
+    <script type="text/javascript" src="../added/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../added/js/ejercicio5.js"></script>
+    <script type="text/javascript" src="../added/js/notificaciones.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/inicio.css">
 </head>
 <body>
@@ -19,8 +22,9 @@
 			require("body/navegador.php");
 			require("body/sidebarIzq.php");
 			require("body/contenido.php");
-			require("body/sidebarDer.php");
+			require("body/sidebarDer.html");
 		?>
+
 
 	</div>
 </body>

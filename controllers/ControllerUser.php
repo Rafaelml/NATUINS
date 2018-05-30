@@ -13,10 +13,6 @@ if(!isset($_SESSION)){
 }
 if(isset($userdel)){
     $name = htmlspecialchars(trim(strip_tags($userdel)));
-<<<<<<< HEAD
-    $controller->delUser($name);
-=======
     Controller::delUser($userdel);
     header('Location: ../views/index2.php');
->>>>>>> master
 }

@@ -14,11 +14,7 @@
 
         }
         else{
-<<<<<<< HEAD
-            echo '<li><a href="contenido.php?$opcion=adminusuarios">Administrar Usuarios</a></li>';
-=======
             echo '<li><a href="index2.php">Administrar Usuarios</a></li>';
->>>>>>> master
             echo '<li><a href="contenedo.php?$opcion=adminTuins">Administrar Tuins</a></li>';
         }
          echo"</div>";

@@ -12,13 +12,8 @@ class UserR extends UserNoR
     private $email;
     private $message;
     private $privacidad;
-<<<<<<< HEAD
-    //protected $followers;
-    //protected $followings;
-=======
     private $contFollowers;
     private $contFollowings;
->>>>>>> master
     //protected Tuins $numtuins;
 
     public static function crea($user_data = array())
@@ -65,19 +60,12 @@ class UserR extends UserNoR
     {
         return $user->status;
     }
+
     public static function getTelefono($user)
     {
         return $user->telefono;
     }
 
-<<<<<<< HEAD
-=======
-    public static function getTelefono($user)
-    {
-        return $user->telefono;
-    }
-
->>>>>>> master
     public static function getMessage($user)
     {
         return $user->message;
@@ -91,6 +79,10 @@ class UserR extends UserNoR
     public static function getFollowings($user)
     {
         return $user->contFollowings;
+    }
+    public static function getPrivacidad($user)
+    {
+        return $user->privacidad;
     }
 
     private static function set($user)
@@ -110,7 +102,7 @@ class UserR extends UserNoR
     }
     private static function hashPassword($password)
     {
-        return password_hash($password, PASSWORD_DEFAULT);
+        return password_hash($password, PASSWORD_BCRYPT);
     }
     public function compruebaPassword($password,$hash)
     {
@@ -133,7 +125,6 @@ class UserR extends UserNoR
     {
         $user->name =$name;
         $user->setCampos($user);
-<<<<<<< HEAD
     }
 
     public static function settNick($nick,$user)
@@ -154,28 +145,6 @@ class UserR extends UserNoR
         $user->setCampos($user);
     }
 
-=======
-    }
-
-    public static function settNick($nick,$user)
-    {
-        $user->nick =$nick;
-        $user->setCampos($user);
-    }
-
-    public static function settTelefono($telefono,$user)
-    {
-        $user->telefono =$telefono;
-        $user->setCampos($user);
-    }
-
-    public static function settStatus($status,$user)
-    {
-        $user->status =$status;
-        $user->setCampos($user);
-    }
-
->>>>>>> master
     public static function del($idUser){
         $bd = Conexion_BD_Natuins::getSingleton();
         if ($idUser != '') {
@@ -184,6 +153,12 @@ class UserR extends UserNoR
             $bd->get_results_from_query();
             foreach ($bd->rows[0] as $campo =>$valor){
                 UserR::actDelContadorFollowers($valor);
+            }
+            $bd->rows =null;
+            $bd->query ="SELECT idFollower FROM `userfollower` WHERE idUser ='$idUser'";
+            $bd->get_results_from_query();
+            foreach ($bd->rows[0] as $campo =>$valor){
+                UserR::actDelContadorFollowings($valor);
             }
             $bd->query = "DELETE FROM userr WHERE idUser='$idUser'";
             $bd->execute_single_query();
@@ -202,7 +177,8 @@ class UserR extends UserNoR
         $bd->query = "SELECT password FROM userr WHERE nick = '$nick'";
         $bd->get_results_from_query();
         $a = array_pop($bd->rows);
-        if(UserR::compruebaPassword($password,UserR::hashPassword($password))){
+        $b =UserR::compruebaPassword($password,$a['password']);
+        if($b){
             $bd->query = "SELECT * FROM userr WHERE nick = '$nick'";
             $bd->get_results_from_query();
             if(count($bd->rows) == 1){
@@ -302,6 +278,7 @@ class UserR extends UserNoR
         $bd = Conexion_BD_Natuins::getSingleton();
         $bool =false;
         $bd->query ="SELECT * FROM `userfollowing` WHERE idUser ='$idUser' AND idFollowing = '$idUser_a_Seguir'";
+        $bd->rows =null;
         $bd->get_results_from_query();
         if($bd->rows){
             $bool=true;

@@ -10,8 +10,17 @@
     if(!isset($_SESSION)){
         session_start();
     }
-    echo '<div id="contenedor">';
-    $idUser =$_SESSION['idUser'];
+
+     echo '<div id="contenedor">';
+
+
+    if(isset($_REQUEST['caja']) != ''){
+        $idUser = UserNoR::get($_REQUEST['caja']);
+    }
+
+    else
+        $idUser =$_SESSION['idUser'];
+
     $opcion ='tuin';
     if(isset($_REQUEST['opcion'])){
         if($opcion !=$_REQUEST['opcion']){
@@ -23,11 +32,7 @@
     $perfil = new Miperfil($idUser);
     $perfil->cabecera();
     $perfil->navegador();
-    $perfil->izq($user);
-    $perfil->contenido($opcion,$user_data,$user);
-<<<<<<< HEAD
-    $perfil->der($_SESSION['idUser']);
-=======
+    $perfil->izq($user,$idUser);
+    $perfil->contenido($opcion,$user_data,$user,$idUser);
     $perfil->der($_SESSION['idUser'], $user);
->>>>>>> master
     echo '</div>';

@@ -13,7 +13,7 @@
             require("body/cabecera.php");
             require("body/sidebarIzq.php");
             require("body/contenido.php");
-            require("body/sidebarDer.php");
+            require("body/sidebarDer.html");
         ?>
 
 </div>
