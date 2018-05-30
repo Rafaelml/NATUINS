@@ -289,14 +289,15 @@ class UserR extends UserNoR
     {
         $tuin =null;
         $bd = Conexion_BD_Natuins::getSingleton();
-        $bd->query = "SELECT tuin , idUser FROM tuin WHERE idUser ='$idUser'";
+        $bd->query = "SELECT tuin , idUser , contmg FROM tuin WHERE idUser ='$idUser'";
         $bd->get_results_from_query();
         $contador = count($bd->rows);
         $temp =0;
         for ($i = $contador; $i >= 1; $i--) {
             $tuins = $bd->rows[$i-1];
             $nick = UserR::getNick($tuins["idUser"]);
-            array_push($tuins, $nick);
+            $contmg = $tuins["contmg"];
+            array_push($tuins, $nick, $contmg);
             $tuin[$temp] =$tuins;
             $temp++;
         }

@@ -1,7 +1,6 @@
 function realizaProceso(valorCaja1){
     var parametros = {
-        "valorCaja1" : valorCaja1,
-        "valorCaja2" : valorCaja2
+        "valorCaja1" : valorCaja1
     };
     $.ajax({
         data:  parametros,
@@ -11,7 +10,9 @@ function realizaProceso(valorCaja1){
             $("#resultado").html("Procesando, espere por favor...");
         },
         success:  function (response) {
-            $("#resultado").html(response);
+            if(response == "alerta"){
+                document.getElementById(valorCaja1).value="Esperando...";
+            }
         }
     });
 }

@@ -183,9 +183,8 @@ class Controller{
         for($i =0;$i<$count;$i++){
             $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
             $a .='<div><form action="" method="POST">
-            <input type="button" href="javascript:;" onclick="realizaProceso('.$dest[$i]['idUser'].');return false;" value="Calcula"/>';
-        }//<button  type="submit">Seguir</button></form></div> ../controllers/seguir.php?$idUser='.$dest[$i]['idUser'].'
-        //$('#valor1').val()
+            <input id ='.$dest[$i]['idUser'].' type="button" href="javascript:;" onclick="realizaProceso('.$dest[$i]['idUser'].');return false;" value="Seguir"/>';
+        }
         return $a;
     }
     public static function viewYourTuins($idUser){
