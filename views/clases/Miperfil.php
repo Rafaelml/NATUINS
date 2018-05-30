@@ -12,9 +12,11 @@ class Miperfil
         echo '<div id="contenido">';
 
         if($idUser == $_SESSION['idUser']){
+
             if($opcion =='tuin'){
                 echo Controller::viewYourTuins($user_data['idUser']);
             }
+
             elseif ($opcion =='editarperfil'){
                         $name =Controller::getName($user);
                         $status =Controller::getStatus($user);
@@ -38,9 +40,28 @@ class Miperfil
                                <textarea rows="1" cols="35" name="telefono"></textarea><p></p>
                                <button type="submit">Guardar</button></form></div>';
             }
+
+            elseif($opcion == 'seguidores'){
+                echo Controller::viewFollowers($user_data['idUser']);
+            }
+
+            elseif($opcion == 'seguidos'){
+                echo Controller::viewFollowings($user_data['idUser']);
+            }
+
         }
         else{
-            echo Controller::viewYourTuins($user_data['idUser']);
+            if($opcion == "tuin") {
+                echo Controller::viewYourTuins($user_data['idUser']);
+            }
+
+            else if($opcion == "seguidores"){
+                echo Controller::viewFollowers($user_data['idUser']);
+            }
+
+            else if($opcion == "seguidos"){
+                echo Controller::viewFollowings($user_data['idUser']);
+            }
         }
 
         echo '</div>';
@@ -80,14 +101,18 @@ class Miperfil
     }
     public function der($idUser, $user){
         echo"<div id='sidebar-right'>";
+
         echo '<ul>
-                <li>Seguidores:';
+                <li><a href="miperfil.php?opcion=seguidores">Seguidores</a>';
         echo Controller:: getFollowers($user);
         echo"</li>";
-        echo '<li>Seguidos:';
+
+        echo '<li><a href="miperfil.php?opcion=seguidos">Seguidos</a>';
         echo Controller:: getFollowings($user);
         echo"</li>";
+
         echo '</ul>';
+
 	    echo Controller::viewPersonasDestacadasRegistrado($idUser);
         echo"</div>";
     }

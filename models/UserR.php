@@ -303,5 +303,43 @@ class UserR extends UserNoR
         }
         return $tuin;
     }
+
+    public static function viewFollowings($idUser)
+    {
+        $following =null;
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query = "SELECT idFollowing FROM userfollowing WHERE idUser='$idUser'";
+        $bd->rows=null;
+        $bd->get_results_from_query();
+        $contador = count($bd->rows);
+        $temp =0;
+        for ($i = 0; $i < $contador; $i++) {
+            $user = $bd->rows[$i];
+            $nick = UserNoR::getNick($user["idFollowing"]);
+            array_push($user, $nick);
+            $following[$temp] =$user;
+            $temp++;
+        }
+        return $following;
+    }
+
+    public static function viewFollowers($idUser)
+    {
+        $follower = null;
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query = "SELECT idFollower FROM userfollower WHERE idUser='$idUser'";
+        $bd->rows=null;
+        $bd->get_results_from_query();
+        $contador = count($bd->rows);
+        $temp = 0;
+        for ($i = 0; $i < $contador; $i++) {
+            $user  = $bd->rows[$i];
+            $nick = UserNoR::getNick($user["idFollower"]);
+            array_push($user, $nick);
+            $follower[$temp] = $user;
+            $temp++;
+        }
+        return $follower;
+    }
 }
 ?>

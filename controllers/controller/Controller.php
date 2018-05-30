@@ -209,6 +209,37 @@ class Controller{
 
         return $mostrar;
     }
+
+    public static function viewFollowers($idUser){
+        $mostrar ="";
+        $user = UserR::viewFollowers($idUser);
+        if($user != null) {
+            $cont =count($user);
+            for ($i = 0; $i < $cont; $i++) {
+                $mostrar .='<div id="tuin">';
+                $mostrar .= '<p>' . $user[$i][0] . '</p>';
+                $mostrar .='</div>';
+            }
+        }
+
+        return $mostrar;
+    }
+
+    public static function viewFollowings($idUser){
+        $mostrar ="";
+        $user = UserR::viewFollowings($idUser);
+        if($user != null) {
+            $cont =count($user);
+            for ($i = 0; $i < $cont; $i++) {
+                $mostrar .='<div id="tuin">';
+                $mostrar .= '<p>' . $user[$i][0] . '</p>';
+                $mostrar .='</div>';
+            }
+        }
+
+        return $mostrar;
+    }
+
     public static function getUser($idUser){
         return UserR::getUser($idUser);
     }
