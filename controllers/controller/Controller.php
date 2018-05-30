@@ -182,8 +182,8 @@ class Controller{
         $count =count($dest);
         for($i =0;$i<$count;$i++){
             $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
-            $a .='<div><form action="../controllers/seguir.php?$idUser='.$dest[$i]['idUser'].'" method="POST">
-            <button type="submit">Seguir</button></form></div>';
+            $a .='<div><form action="" method="POST">
+            <input id ='.$dest[$i]['idUser'].' type="button" href="javascript:;" onclick="realizaProceso('.$dest[$i]['idUser'].');return false;" value="Seguir"/>';
         }
         return $a;
     }
@@ -231,6 +231,9 @@ class Controller{
 
     public static function getFollowings($user){
         return UserR::getFollowings($user);
+    }
+    public static function getPrivacidad($user){
+        return UserR::getPrivacidad($user);
     }
 }
 ?>

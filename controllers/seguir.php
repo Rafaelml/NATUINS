@@ -1,12 +1,13 @@
 <?php
     require_once ("controller/Controller.php");
 	session_start();
-	    Controller::actFollowing($_SESSION['idUser'],$_REQUEST['$idUser']);
-	    if($_SESSION['pulsado'] ==false){
-            $_SESSION['pulsado'] = true;
+        $user =Controller::getUser($_REQUEST['valorCaja1']);
+	    if(Controller::getPrivacidad($user)){
+	        $resultado ="alerta";
+            $id =$_REQUEST['valorCaja1'];
+	        echo $resultado;
         }
         else{
-            $_SESSION['pulsado'] = false;
-        }
-        header('Location: ../views/index2.php');
+            Controller::actFollowing($_SESSION['idUser'],$_REQUEST['valorCaja1']);
+	    }
 ?>
