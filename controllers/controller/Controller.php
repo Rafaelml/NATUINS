@@ -3,6 +3,7 @@
 require_once '../models/UserNoR.php';
 require_once '../models/UserR.php';
 require_once '../models/Admin.php';
+require_once '../models/Tuins.php';
 
 class Controller{
     private $user;
@@ -35,10 +36,17 @@ class Controller{
                 $mostrar .='<div id="tuin">';
                 $mostrar .= '<p>' . $tuins[$i]["tuin"] . '</p>';
                 $mostrar .= '<p>' . $tuins[$i]["0"] . '</p>';
+                $mostrar .= '<p>' . $tuins[$i]["contmg"] . '</p>';
+                $mostrar .= '<form action="../controllers/controllerMeGusta.php?megusta='.$tuins[$i]["0"].'&tuin='.$tuins[$i]["tuin"].'&idUser='.$tuins[$i]["idUser"].'&contmg='.$tuins[$i]["contmg"].'&idTuin='.$tuins[$i]["idTuin"].'" method="POST">';
+                $mostrar.="<button type='submit'>Me Gusta</button>";
+                $mostrar .= '</form>';
                 $mostrar .='</div>';
             }
         }
         return $mostrar;
+    }
+    public static function addMegusta($tuin){
+        Tuins::addMegusta($tuin);
     }
 
     public static function updateName($name,$user){

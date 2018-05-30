@@ -14,14 +14,15 @@ class UserNoR
     {
         $tuin =null;
         $bd = Conexion_BD_Natuins::getSingleton();
-        $bd->query = "SELECT tuin , idUser FROM tuin WHERE `idUser` NOT IN (SELECT `idUser` FROM `userr` WHERE `privacidad` ='1')";
+        $bd->query = "SELECT * FROM tuin WHERE `idUser` NOT IN (SELECT `idUser` FROM `userr` WHERE `privacidad` ='1')";
         $bd->get_results_from_query();
         $contador = count($bd->rows);
         $temp =0;
         for ($i = $contador; $i >= 1; $i--) {
            $tuins = $bd->rows[$i-1];
            $nick = UserNoR::getNick($tuins["idUser"]);
-           array_push($tuins, $nick);
+           $contmg = $tuins["contmg"];
+           array_push($tuins, $nick, $contmg);
            $tuin[$temp] =$tuins;
            $temp++;
         }

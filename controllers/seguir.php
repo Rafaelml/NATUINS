@@ -9,5 +9,6 @@
         }
         else{
             Controller::actFollowing($_SESSION['idUser'],$_REQUEST['valorCaja1']);
+            header('Location: ../views/index2.php');
 	    }
 ?>
