@@ -1,6 +1,8 @@
 <?php
 
 require_once ("../base/Conexion_BD_Natuins.php");
+require_once ("Tuins.php");
+
 class UserR extends UserNoR
 {
     private $idUser;
@@ -66,11 +68,6 @@ class UserR extends UserNoR
         return $user->telefono;
     }
 
-    public static function getImg($user)
-    {
-        return $user->img;
-    }
-
     public static function getMessage($user)
     {
         return $user->message;
@@ -88,6 +85,15 @@ class UserR extends UserNoR
     public static function getPrivacidad($user)
     {
         return $user->privacidad;
+    }
+    public static function setImg($img,$user)
+    {
+        $user->img =$img;
+        $user->setCampos($user);
+    }
+    public static function getImg($user)
+    {
+        return $user->img;
     }
 
     private static function set($user)
@@ -149,11 +155,42 @@ class UserR extends UserNoR
         $user->status =$status;
         $user->setCampos($user);
     }
-
-    public static function setImg($img,$user)
+    public static function viewFollowings($idUser)
     {
-        $user->img =$img;
-        $user->setCampos($user);
+        $following =null;
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query = "SELECT idFollowing FROM userfollowing WHERE idUser='$idUser'";
+        $bd->rows=null;
+        $bd->get_results_from_query();
+        $contador = count($bd->rows);
+        $temp =0;
+        for ($i = 0; $i < $contador; $i++) {
+            $user = $bd->rows[$i];
+            $nick = UserNoR::getNick($user["idFollowing"]);
+            array_push($user, $nick);
+            $following[$temp] =$user;
+            $temp++;
+        }
+        return $following;
+    }
+
+    public static function viewFollowers($idUser)
+    {
+        $follower = null;
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query = "SELECT idFollower FROM userfollower WHERE idUser='$idUser'";
+        $bd->rows=null;
+        $bd->get_results_from_query();
+        $contador = count($bd->rows);
+        $temp = 0;
+        for ($i = 0; $i < $contador; $i++) {
+            $user  = $bd->rows[$i];
+            $nick = UserNoR::getNick($user["idFollower"]);
+            array_push($user, $nick);
+            $follower[$temp] = $user;
+            $temp++;
+        }
+        return $follower;
     }
 
     public static function del($idUser){
@@ -170,6 +207,12 @@ class UserR extends UserNoR
             $bd->get_results_from_query();
             foreach ($bd->rows[0] as $campo =>$valor){
                 UserR::actDelContadorFollowings($valor);
+            }
+            $bd->query="SELECT idTuin FROM `megustas` WHERE idUser ='$idUser'";
+            $bd->rows =null;
+            $bd->get_results_from_query();
+            foreach ($bd->rows[0] as $campo =>$valor){
+                Tuins::disminuirContMG($valor);
             }
             $bd->query = "DELETE FROM userr WHERE idUser='$idUser'";
             $bd->execute_single_query();
@@ -313,44 +356,6 @@ class UserR extends UserNoR
             $temp++;
         }
         return $tuin;
-    }
-
-    public static function viewFollowings($idUser)
-    {
-        $following =null;
-        $bd = Conexion_BD_Natuins::getSingleton();
-        $bd->query = "SELECT idFollowing FROM userfollowing WHERE idUser='$idUser'";
-        $bd->rows=null;
-        $bd->get_results_from_query();
-        $contador = count($bd->rows);
-        $temp =0;
-        for ($i = 0; $i < $contador; $i++) {
-            $user = $bd->rows[$i];
-            $nick = UserNoR::getNick($user["idFollowing"]);
-            array_push($user, $nick);
-            $following[$temp] =$user;
-            $temp++;
-        }
-        return $following;
-    }
-
-    public static function viewFollowers($idUser)
-    {
-        $follower = null;
-        $bd = Conexion_BD_Natuins::getSingleton();
-        $bd->query = "SELECT idFollower FROM userfollower WHERE idUser='$idUser'";
-        $bd->rows=null;
-        $bd->get_results_from_query();
-        $contador = count($bd->rows);
-        $temp = 0;
-        for ($i = 0; $i < $contador; $i++) {
-            $user  = $bd->rows[$i];
-            $nick = UserNoR::getNick($user["idFollower"]);
-            array_push($user, $nick);
-            $follower[$temp] = $user;
-            $temp++;
-        }
-        return $follower;
     }
 }
 ?>

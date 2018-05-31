@@ -11,7 +11,7 @@
 			    </form>
 		        </div>';
 	        echo'<div id="tuins">';
-	        echo Controller::viewTuins();
+	        echo Controller::viewTuins($_SESSION['idUser']);
 	        echo '</div>';
 	    }
 	    elseif($_SESSION['tipo'] == 'admin'){

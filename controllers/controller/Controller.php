@@ -23,7 +23,37 @@ class Controller{
         }
         return self::$instancia;
     }
-    public static function viewTuins(){
+    public static function viewFollowers($idUser){
+        $mostrar ="";
+        $user = UserR::viewFollowers($idUser);
+        if($user != null) {
+            $cont =count($user);
+            for ($i = 0; $i < $cont; $i++) {
+                $mostrar .='<div id="tuin">';
+                $mostrar .= '<p>' . $user[$i][0] . '</p>';
+                $mostrar .='</div>';
+            }
+        }
+
+        return $mostrar;
+    }
+
+    public static function viewFollowings($idUser){
+        $mostrar ="";
+        $user = UserR::viewFollowings($idUser);
+        if($user != null) {
+            $cont =count($user);
+            for ($i = 0; $i < $cont; $i++) {
+                $mostrar .='<div id="tuin">';
+                $mostrar .= '<p>' . $user[$i][0] . '</p>';
+                $mostrar .='</div>';
+            }
+        }
+
+        return $mostrar;
+    }
+    public static function viewTuins($idUser){
+        $a=-1;
         $mostrar ="";
         $usuario =new UserNoR();
         $tuins = $usuario->viewTuins();
@@ -37,16 +67,30 @@ class Controller{
                 $mostrar .= '<p>' . $tuins[$i]["tuin"] . '</p>';
                 $mostrar .= '<p>' . $tuins[$i]["0"] . '</p>';
                 $mostrar .= '<p>' . $tuins[$i]["contmg"] . '</p>';
-                $mostrar .= '<form action="../controllers/controllerMeGusta.php?megusta='.$tuins[$i]["0"].'&tuin='.$tuins[$i]["tuin"].'&idUser='.$tuins[$i]["idUser"].'&contmg='.$tuins[$i]["contmg"].'&idTuin='.$tuins[$i]["idTuin"].'" method="POST">';
-                $mostrar.="<button type='submit'>Me Gusta</button>";
-                $mostrar .= '</form>';
-                $mostrar .='</div>';
+                if(Tuins::existeMeGusta($tuins[$i]["idTuin"],$idUser)){
+                    $mostrar .= '<form action="../controllers/controllerMeGusta.php?megusta='.$a.'&idTuin='.$tuins[$i]["idTuin"].'" method="POST">';
+                    $mostrar.="<button type='submit'>QuitarMeGusta</button>";
+                    $mostrar .= '</form>';
+                    $mostrar .='</div>';
+                }
+                else{
+                    $mostrar .= '<form action="../controllers/controllerMeGusta.php?megusta='.$tuins[$i]["0"].'&tuin='.$tuins[$i]["tuin"].'&idUser='.$tuins[$i]["idUser"].'&contmg='.$tuins[$i]["contmg"].'&idTuin='.$tuins[$i]["idTuin"].'" method="POST">';
+                    $mostrar.="<button type='submit'>Me Gusta</button>";
+                    $mostrar .= '</form>';
+                    $mostrar .='</div>';
+                }
+
             }
         }
         return $mostrar;
     }
-    public static function addMegusta($tuin){
-        Tuins::addMegusta($tuin);
+    public static function addMegusta($tuin,$idTuin,$idUserDa){
+        if(!Tuins::existeMeGusta($idTuin,$idUserDa)){
+            Tuins::addMegusta($tuin,$idUserDa);
+        }
+    }
+    public static function disminuerMG($idTuin){
+        Tuins::disminuirContMG($idTuin);
     }
 
     public static function updateName($name,$user){
@@ -63,10 +107,6 @@ class Controller{
 
     public static function updateTelefono($telefono,$user){
         UserR::settTelefono($telefono,$user);
-    }
-
-    public static function updateImg($img,$user){
-        UserR::setImg($img,$user);
     }
 
     public static function actFollowing($idUser ,$idUser_a_Seguir){
@@ -93,6 +133,9 @@ class Controller{
         }
 
         return $bool;
+    }
+    public static function updateImg($img,$user){
+        UserR::setImg($img,$user);
     }
 
 
@@ -213,37 +256,6 @@ class Controller{
 
         return $mostrar;
     }
-
-    public static function viewFollowers($idUser){
-        $mostrar ="";
-        $user = UserR::viewFollowers($idUser);
-        if($user != null) {
-            $cont =count($user);
-            for ($i = 0; $i < $cont; $i++) {
-                $mostrar .='<div id="tuin">';
-                $mostrar .= '<p>' . $user[$i][0] . '</p>';
-                $mostrar .='</div>';
-            }
-        }
-
-        return $mostrar;
-    }
-
-    public static function viewFollowings($idUser){
-        $mostrar ="";
-        $user = UserR::viewFollowings($idUser);
-        if($user != null) {
-            $cont =count($user);
-            for ($i = 0; $i < $cont; $i++) {
-                $mostrar .='<div id="tuin">';
-                $mostrar .= '<p>' . $user[$i][0] . '</p>';
-                $mostrar .='</div>';
-            }
-        }
-
-        return $mostrar;
-    }
-
     public static function getUser($idUser){
         return UserR::getUser($idUser);
     }
