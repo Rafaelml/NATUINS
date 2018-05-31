@@ -65,6 +65,10 @@ class Controller{
         UserR::settTelefono($telefono,$user);
     }
 
+    public static function updateImg($img,$user){
+        UserR::setImg($img,$user);
+    }
+
     public static function actFollowing($idUser ,$idUser_a_Seguir){
         if(!UserR::existFollowing($idUser,$idUser_a_Seguir)){
             UserR::addFollowings($idUser,$idUser_a_Seguir);

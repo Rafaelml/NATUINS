@@ -6,6 +6,7 @@ if(isset($_REQUEST)){
         session_start();
     }
     $user = Controller::getUser($_SESSION['idUser']);
+
     if($_REQUEST['controlador'] =="editName"){
         $name = htmlspecialchars(trim(strip_tags($_REQUEST['name'])));
         Controller::updateName($name,$user);
@@ -22,9 +23,12 @@ if(isset($_REQUEST)){
         $password = htmlspecialchars(trim(strip_tags($_REQUEST['pass'])));
         Controller::updatePass($password,$user);
     }
-    else{
-
+    elseif ($_REQUEST['controlador'] == "editFoto"){
+        $foto = ($_REQUEST['img']);
+        Controller::updateImg($foto,$user);
     }
 
     header("Location: ../views/miperfil.php?opcion=editarperfil");
 }
+
+?>

@@ -66,6 +66,11 @@ class UserR extends UserNoR
         return $user->telefono;
     }
 
+    public static function getImg($user)
+    {
+        return $user->img;
+    }
+
     public static function getMessage($user)
     {
         return $user->message;
@@ -142,6 +147,12 @@ class UserR extends UserNoR
     public static function settStatus($status,$user)
     {
         $user->status =$status;
+        $user->setCampos($user);
+    }
+
+    public static function setImg($img,$user)
+    {
+        $user->img =$img;
         $user->setCampos($user);
     }
 

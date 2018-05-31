@@ -8,6 +8,7 @@ class Miperfil
     $this->user =$user;
 
     }
+
     public function contenido($opcion,$user_data,$user,$idUser){
         echo '<div id="contenido">';
 
@@ -21,6 +22,7 @@ class Miperfil
                         $name =Controller::getName($user);
                         $status =Controller::getStatus($user);
                         $telefono =Controller::getTelefono($user);
+                        $img = Controller::getImg($user);
 
                         echo '<div id="tuin">
                                <p>Nombre: '.$name.' </p>
@@ -39,6 +41,12 @@ class Miperfil
                                <form action="../controllers/controlerUpdatePerfil.php?controlador=editTelefono" method="POST">
                                <textarea rows="1" cols="35" name="telefono"></textarea><p></p>
                                <button type="submit">Guardar</button></form></div>';
+
+                        echo '<div id="tuin">
+                               <p>Imagen: '.$img.' </p>
+                               <form name="fichero" action="../controllers/controlerUpdatePerfil.php?controlador=editFoto" method="POST"
+                               enctype="multipart/form-data">Imagen: <input type="file" name="archivo"/>
+                               <input type="submit" value="Subir"></form></div>';
             }
 
             elseif($opcion == 'seguidores'){
@@ -72,6 +80,10 @@ class Miperfil
 
         if($idUser == $_SESSION['idUser']){
 
+            echo "<p>Imagen: ";
+            echo Controller::getImg($user);
+            echo "</p>";
+
             echo "<p>Nombre: ";
             echo Controller::getName($user);
             echo "</p>";
@@ -94,27 +106,45 @@ class Miperfil
        }
 
         else{
-           // echo Controller::viewPersonasDestacadasRegistrado($idUser);
+
+            echo "<p>Nombre: ";
+            echo Controller::getName($user);
+            echo "</p>";
+
+            echo "<p>Nick: ";
+            echo Controller::getNick($user);
+            echo "</p>";
+
+            echo "<p>Status: ";
+            echo Controller::getStatus($user);
+            echo "</p>";
+
+            echo "<p>Telefono: ";
+            echo Controller::getTelefono($user);
+            echo "</p>";
         } 
 
         echo "</div>";
     }
     public function der($idUser, $user){
+
         echo"<div id='sidebar-right'>";
 
-        echo '<ul>
-                <li><a href="miperfil.php?opcion=seguidores">Seguidores</a>';
-        echo Controller:: getFollowers($user);
-        echo"</li>";
+            echo '<ul>
+                    <li><a href="miperfil.php?opcion=seguidores">Seguidores</a>';
+            echo Controller:: getFollowers($user);
+            echo"</li>";
 
-        echo '<li><a href="miperfil.php?opcion=seguidos">Seguidos</a>';
-        echo Controller:: getFollowings($user);
-        echo"</li>";
+            echo '<li><a href="miperfil.php?opcion=seguidos">Seguidos</a>';
+            echo Controller:: getFollowings($user);
+            echo"</li>";
 
-        echo '</ul>';
+            echo '</ul>';
 
-	    echo Controller::viewPersonasDestacadasRegistrado($idUser);
+            echo Controller::viewPersonasDestacadasRegistrado($idUser);
+
         echo"</div>";
+
     }
     public function navegador(){
         echo'
