@@ -219,7 +219,7 @@ class Controller{
         header('location: ../views/inicio.php');
     }
     public static function processTuin($tuin,$idUser){
-        UserR::createTuin($tuin,$idUser);
+        Tuins::createTuin($tuin,$idUser);
         header('Location: ../views/index2.php');
     }
     public static function viewPersonasDestacadas(){

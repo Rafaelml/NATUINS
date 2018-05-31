@@ -25,6 +25,40 @@ class Tuins
         $tuin =new Tuins($idTuin,$tuins,$idUser,$contmg);
         return $tuin;
     }
+
+    private static function comprobarPalabra($palabra){
+        $mostrar="";
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query = "SELECT palabra FROM diccionario WHERE palabra='$palabra'";
+        $bd->rows = null;
+        $bd->get_results_from_query();
+        $cont = count($bd->rows);
+
+        if($bd->rows){
+            $a =strlen($palabra);
+            for($i=0; $i < $a; $i++){
+                $mostrar .= '*';
+            }
+        }
+        else
+            $mostrar = $palabra;
+
+        return $mostrar;
+    }
+
+    public static function createTuin($tuin,$idUser){
+        $a =explode(" ",$tuin);
+        $count = count($a);
+        $mostrar ="";
+        for ($i =0;$i<$count;$i++){
+            $mostrar.= Tuins::comprobarPalabra($a[$i]);
+            $mostrar.=" ";
+        }
+        $bd = Conexion_BD_Natuins::getSingleton();
+        $bd->query = "INSERT INTO tuin (tuin, idUser) VALUES ('$mostrar', '$idUser')";
+        $bd->execute_single_query();
+    }
+
     public static function addMegusta($tuin,$idUser){
         $bd =Conexion_BD_Natuins::getSingleton();
         $bd->query ="SELECT `contmg` FROM `tuin` WHERE `idTuin`='$tuin->idTuin'";

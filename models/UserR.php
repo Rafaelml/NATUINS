@@ -257,11 +257,7 @@ class UserR extends UserNoR
         $_SESSION['idUser'] = $this->idUser;
         $_SESSION['pulsado'] =false;
     }
-    public static function createTuin($tuin,$idUser){//Está función debería estar en Tuins
-        $bd = Conexion_BD_Natuins::getSingleton();
-        $bd->query = "INSERT INTO tuin (tuin, idUser) VALUES ('$tuin', '$idUser')";
-        $bd->execute_single_query();
-    }
+
     public static function addFollowings($idUser , $idUserFollowing)
     {
         $bd = Conexion_BD_Natuins::getSingleton();
