@@ -189,6 +189,7 @@ class Controller{
         $mostrar.="<button type='submit'>Eliminar</button>";
         $mostrar .= '</form>';
         $mostrar .='<div id="">';
+        $mostrar .= '</div>';
         return $mostrar;
     }
     private static function cominit($nick){
