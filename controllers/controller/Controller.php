@@ -222,6 +222,9 @@ class Controller{
         Tuins::createTuin($tuin,$idUser);
         header('Location: ../views/index2.php');
     }
+    public static function estadoNotificaciones($idUser){
+       return UserR::estadoNotificaciones($idUser);
+    }
     public static function viewPersonasDestacadas(){
         $a ="";
         $dest =UserNoR::viewDestacados();

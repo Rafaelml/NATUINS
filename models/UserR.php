@@ -257,7 +257,15 @@ class UserR extends UserNoR
         $_SESSION['idUser'] = $this->idUser;
         $_SESSION['pulsado'] =false;
     }
-
+    public static function estadoNotificaciones($idUser){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT estado FROM notificaciones WHERE idUserReceiver ='$idUser'";
+        $bd->rows =null;
+        $bd->get_results_from_query();
+        $a =array_pop($bd->rows);
+        $b =$a['estado'];
+        return $a['estado'];
+    }
     public static function addFollowings($idUser , $idUserFollowing)
     {
         $bd = Conexion_BD_Natuins::getSingleton();
