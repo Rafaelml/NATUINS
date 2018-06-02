@@ -8,7 +8,7 @@ require_once '../models/Tuins.php';
 $idMGRecieve = htmlspecialchars(trim(strip_tags($_REQUEST["megusta"])));
 $idTuin =$_REQUEST["idTuin"];
 if($idMGRecieve ==-1){
-    Controller::disminuerMG($idTuin);
+    Controller::disminuerMG($idTuin,$_SESSION['idUser']);
 }
 else{
     $tuin =$_REQUEST["tuin"];

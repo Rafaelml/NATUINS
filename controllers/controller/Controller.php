@@ -89,8 +89,34 @@ class Controller{
             Tuins::addMegusta($tuin,$idUserDa);
         }
     }
-    public static function disminuerMG($idTuin){
-        Tuins::disminuirContMG($idTuin);
+    public static function disminuerMG($idTuin,$idUser){
+        Tuins::disminuirContMG($idTuin,$idUser);
+    }
+    public static function viewTuinsDestacados($idUser){
+        $a=-1;
+        $tuins= UserR::viewTuinsDestacados();
+        $mostrar ="";
+        if($tuins != null) {
+            $cont = count($tuins);
+            for ($i = 0; $i < $cont; $i++) {
+                $mostrar .= '<div id="tuin">';
+                $mostrar .= '<p>' . $tuins[$i]["tuin"] . '</p>';
+                $mostrar .= '<p>' . $tuins[$i]["idUser"] . '</p>';
+                $mostrar .= '<p>' . $tuins[$i]["contmg"] . '</p>';
+                if (Tuins::existeMeGusta($tuins[$i]["idTuin"], $idUser)) {
+                    $mostrar .= '<form action="../controllers/controllerMeGusta.php?megusta=' . $a . '&idTuin=' . $tuins[$i]["idTuin"] . '" method="POST">';
+                    $mostrar .= "<button type='submit'>QuitarMeGusta</button>";
+                    $mostrar .= '</form>';
+                    $mostrar .= '</div>';
+                } else {
+                    $mostrar .= '<form action="../controllers/controllerMeGusta.php?megusta=' . $tuins[$i]["idUser"] . '&tuin=' . $tuins[$i]["tuin"] . '&idUser=' . $tuins[$i]["idUser"] . '&contmg=' . $tuins[$i]["contmg"] . '&idTuin=' . $tuins[$i]["idTuin"] . '" method="POST">';
+                    $mostrar .= "<button type='submit'>Me Gusta</button>";
+                    $mostrar .= '</form>';
+                    $mostrar .= '</div>';
+                }
+            }
+        }
+        return $mostrar;
     }
 
     public static function updateName($name,$user){
@@ -260,6 +286,20 @@ class Controller{
 
         return $mostrar;
     }
+    public static function getMeGustaUserTuin($idUser){
+        $tuins =Tuins::getMeGustasUser($idUser);
+        $mostrar="";
+        if($tuins != null) {
+            $cont =count($tuins)    ;
+            for ($i = 0; $i < $cont; $i++) {
+                $tuin =Tuins::getTuinFromIdTuin($tuins[$i]['idTuin']);
+                $mostrar .='<div id="tuin">';
+                $mostrar .= '<p>' . $tuin[0]['tuin']. '</p>';
+                $mostrar .='</div>';
+            }
+        }
+        return $mostrar;
+    }
     public static function getUser($idUser){
         return UserR::getUser($idUser);
     }
@@ -281,7 +321,8 @@ class Controller{
     }
 
     public static function getImg($user){
-        return UserR::getImg($user);
+        $dir= UserR::getImg($user);
+        return '<img src="img/'.$dir.'" width="75" height="75">';
     }
 
     public static function getFollowers($user){

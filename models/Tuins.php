@@ -25,6 +25,13 @@ class Tuins
         $tuin =new Tuins($idTuin,$tuins,$idUser,$contmg);
         return $tuin;
     }
+    public static function getTuinFromIdTuin($idTuin){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT tuin FROM tuin WHERE idTuin ='$idTuin'";
+        $bd->rows =null;
+        $bd->get_results_from_query();
+        return $bd->rows;
+    }
 
     private static function comprobarPalabra($palabra){
         $mostrar="";
@@ -81,7 +88,7 @@ class Tuins
         }
         return $existe;
     }
-    public static function disminuirContMG($idTuin){
+    public static function disminuirContMG($idTuin,$idUser){
         $bd =Conexion_BD_Natuins::getSingleton();
         $bd->query ="SELECT `contmg` FROM `tuin` WHERE `idTuin`='$idTuin'";
         $bd->get_results_from_query();
@@ -89,12 +96,22 @@ class Tuins
         $a =$a['contmg'] - 1;
         $bd->query ="UPDATE `tuin` SET `contmg` = '$a' WHERE `tuin`.`idTuin` = '$idTuin'";
         $bd->execute_single_query();
+        $bd->query ="DELETE FROM `megustas` WHERE `idTuin` = '$idTuin' AND `idUser` ='$idUser'";
+        $bd->execute_single_query();
     }
+
     public static function getMeGustas(){
         $bd=Conexion_BD_Natuins::getSingleton();
         $bd->query ="SELECT * FROM `megustas`";
         $bd->rows =null;
         return $bd->get_results_from_query();
+    }
+    public static function getMeGustasUser($idUser){
+        $bd=Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT idTuin FROM `megustas` WHERE idUser ='$idUser'";
+        $bd->rows =null;
+        $bd->get_results_from_query();
+        return $bd->rows;
     }
 
 

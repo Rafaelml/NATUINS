@@ -35,7 +35,7 @@
     $user_data =array('idUser'=>$idUser);
     $perfil = new Miperfil($idUser);
     $perfil->cabecera();
-    $perfil->navegador();
+    $perfil->navegador($user);
     $perfil->izq($user,$idUser);
     $perfil->contenido($opcion,$user_data,$user,$idUser);
     $perfil->der($_SESSION['idUser'], $user);

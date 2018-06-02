@@ -17,6 +17,9 @@ class Miperfil
             if($opcion =='tuin'){
                 echo Controller::viewYourTuins($user_data['idUser']);
             }
+            elseif ($opcion=='megusta'){
+                echo Controller::getMeGustaUserTuin($user_data['idUser']);
+            }
 
             elseif ($opcion =='editarperfil'){
                         $name =Controller::getName($user);
@@ -45,7 +48,7 @@ class Miperfil
                         echo '<div id="tuin">
                                <p>Imagen: '.$img.' </p>
                                <form name="fichero" action="../controllers/controlerUpdatePerfil.php?controlador=editFoto" method="POST"
-                               enctype="multipart/form-data">Imagen: <input type="file" name="archivo"/>
+                               enctype="multipart/form-data">Imagen: <input id="imagen" type="file" name="archivo"/>
                                <input type="submit" value="Subir"></form></div>';
             }
 
@@ -106,6 +109,9 @@ class Miperfil
        }
 
         else{
+            echo "<p>Imagen: ";
+            echo Controller::getImg($user);
+            echo "</p>";
 
             echo "<p>Nombre: ";
             echo Controller::getName($user);
@@ -129,13 +135,13 @@ class Miperfil
     public function der($idUser, $user){
 
         echo"<div id='sidebar-right'>";
-
+            $nick =Controller::getNick($user);
             echo '<ul>
-                    <li><a href="miperfil.php?opcion=seguidores">Seguidores</a>';
+                    <li><a href="miperfil.php?opcion=seguidores&caja='.$nick.'">Seguidores</a>';
             echo Controller:: getFollowers($user);
             echo"</li>";
 
-            echo '<li><a href="miperfil.php?opcion=seguidos">Seguidos</a>';
+            echo '<li><a href="miperfil.php?opcion=seguidos&caja='.$nick.'">Seguidos</a>';
             echo Controller:: getFollowings($user);
             echo"</li>";
 
@@ -146,12 +152,13 @@ class Miperfil
         echo"</div>";
 
     }
-    public function navegador(){
+    public function navegador($user){
+        $nick =Controller::getNick($user);
         echo'
         <div id="navegador">
             <ul>
-                <li><a href="miperfil.php?opcion=tuin">Tuins</a></li>
-                <li><a href="miperfil.php">Me Gusta</a></li>
+                <li><a href="miperfil.php?opcion=tuin&caja='.$nick.'">Tuins</a></li>
+                <li><a href="miperfil.php?opcion=megusta&caja='.$nick.'">Me Gusta</a></li>
                 <li><a href="buscador.php">Buscador</a></li>
                 <li><a href="noimplem.php">Mensajes</a></li>
             </ul>

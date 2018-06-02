@@ -96,6 +96,7 @@ class UserR extends UserNoR
         return $user->img;
     }
 
+
     private static function set($user)
     {
         $bd = Conexion_BD_Natuins::getSingleton();
@@ -123,6 +124,13 @@ class UserR extends UserNoR
         $bd =Conexion_BD_Natuins::getSingleton();
         $bd->rows =null;
         $bd->query ="SELECT * FROM `userr` WHERE `idUser` NOT IN (SELECT `idFollowing` FROM `userfollowing` WHERE `idUser` ='$idUser') AND `idUser` NOT IN ('$idUser') ORDER BY contFollowers DESC";
+        $bd->get_results_from_query();
+        return $bd->rows;
+    }
+    public static function viewTuinsDestacados(){
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->rows =null;
+        $bd->query ="SELECT * FROM `tuin` ORDER BY `contmg` DESC LIMIT 20";
         $bd->get_results_from_query();
         return $bd->rows;
     }
@@ -348,6 +356,7 @@ class UserR extends UserNoR
         $tuin =null;
         $bd = Conexion_BD_Natuins::getSingleton();
         $bd->query = "SELECT tuin , idUser , contmg FROM tuin WHERE idUser ='$idUser'";
+        $bd->rows =null;
         $bd->get_results_from_query();
         $contador = count($bd->rows);
         $temp =0;
