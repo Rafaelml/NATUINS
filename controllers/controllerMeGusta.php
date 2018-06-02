@@ -18,4 +18,4 @@ else{
     $tuin =Tuins::getTuin($idTuin,$tuin,$idUsert,$contmg);
     Controller::addMegusta($tuin,$idTuin,$_SESSION['idUser']);
 }
-//$idUser = $_SESSION['idUser'];
+header('Location: ../views/index2.php');

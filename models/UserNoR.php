@@ -28,7 +28,7 @@ class UserNoR
         }
         return $tuin;
     }
-    protected  static function getNick($idUser = "")
+    public  static function getNick($idUser = "")
     {
         $nick="";
         if ($idUser != "") {
@@ -55,7 +55,8 @@ class UserNoR
             $bd->query = "SELECT idUser FROM userr WHERE nick ='$nick'";
             $bd->get_results_from_query();
         }
-        return $bd->rows[0]['idUser'];
+        $idUser =array_pop($bd->rows);
+        return $idUser['idUser'];
     }
 
     public static function checkEmail($email){

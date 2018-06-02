@@ -15,7 +15,9 @@
 <div id="contenedor">
 
     <?php include ('body/cabecera.php');?>
+    <?php include ('body/navegador.php');?>
     <?php include ('body/sidebarIzq.php');?>
+
 
     <div id="contenido">
         <?php

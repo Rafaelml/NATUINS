@@ -96,12 +96,14 @@ class Controller{
         $a=-1;
         $tuins= UserR::viewTuinsDestacados();
         $mostrar ="";
+        $nick ="";
         if($tuins != null) {
             $cont = count($tuins);
             for ($i = 0; $i < $cont; $i++) {
                 $mostrar .= '<div id="tuin">';
                 $mostrar .= '<p>' . $tuins[$i]["tuin"] . '</p>';
-                $mostrar .= '<p>' . $tuins[$i]["idUser"] . '</p>';
+                $nick =UserNoR::getNick($tuins[$i]["idUser"]);
+                $mostrar .= '<p>' . $nick . '</p>';
                 $mostrar .= '<p>' . $tuins[$i]["contmg"] . '</p>';
                 if (Tuins::existeMeGusta($tuins[$i]["idTuin"], $idUser)) {
                     $mostrar .= '<form action="../controllers/controllerMeGusta.php?megusta=' . $a . '&idTuin=' . $tuins[$i]["idTuin"] . '" method="POST">';
@@ -262,15 +264,23 @@ class Controller{
         return $a;
     }
     public static function viewPersonasDestacadasRegistrado($idUser){
-        $a ="";
         $dest =UserR::viewDestacadosR($idUser);
         $count =count($dest);
+        $mostrar ="";
         for($i =0;$i<$count;$i++){
-            $a = $a . "<p>" . $dest[$i]['nick']. '</p>';
-            $a .='<div><form action="" method="POST">
-            <input id ='.$dest[$i]['idUser'].' type="button" href="javascript:;" onclick="realizaProceso('.$dest[$i]['idUser'].');return false;" value="Seguir"/>';
-        }
-        return $a;
+            $mostrar = $mostrar . "<p>" . $dest[$i]['nick']. '</p>';
+            $idUserF =$dest[$i]['idUser'];
+            if (UserR::esPrivado($idUser,$idUserF)==1) {
+                $mostrar .= '<form action="../controllers/seguir.php?idUserF='.$idUserF.'"  method="POST">';
+                $mostrar .= "<button type='submit'>Pendiente</button>";
+                $mostrar .= '</form>';
+            } else {
+                $mostrar .= '<form action="../controllers/seguir.php?idUserF='.$idUserF.'"  method="POST">';
+                $mostrar .= "<button type='submit'>Seguir</button>";
+                $mostrar .= '</form>';
+            }
+            }
+        return $mostrar;
     }
     public static function viewYourTuins($idUser){
         $mostrar ="";

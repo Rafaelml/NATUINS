@@ -123,7 +123,7 @@ class UserR extends UserNoR
     public static function viewDestacadosR($idUser){
         $bd =Conexion_BD_Natuins::getSingleton();
         $bd->rows =null;
-        $bd->query ="SELECT * FROM `userr` WHERE `idUser` NOT IN (SELECT `idFollowing` FROM `userfollowing` WHERE `idUser` ='$idUser') AND `idUser` NOT IN ('$idUser') ORDER BY contFollowers DESC";
+        $bd->query ="SELECT * FROM `userr` WHERE `idUser` NOT IN (SELECT `idFollowing` FROM `userfollowing` WHERE `idUser` ='$idUser' AND `esPrivado` =0) AND `idUser` NOT IN ('$idUser') ORDER BY contFollowers DESC";
         $bd->get_results_from_query();
         return $bd->rows;
     }
@@ -277,10 +277,31 @@ class UserR extends UserNoR
     public static function addFollowings($idUser , $idUserFollowing)
     {
         $bd = Conexion_BD_Natuins::getSingleton();
-        $bd->query = "INSERT INTO `userfollowing` (`idUser`, `idFollowing`) VALUES ('$idUser', '$idUserFollowing')";
-        $bd->execute_single_query();
-        UserR::actAddContadorFollowings($idUser);
-        UserR::actuilizarFollowers($idUserFollowing,$idUser);
+        $bd->query ="SELECT `privacidad` FROM `userr` WHERE `idUser` =$idUserFollowing";
+        $bd->get_results_from_query();
+        $privacidad =array_pop($bd->rows);
+        if($privacidad['privacidad']==0){
+            $bd->query = "INSERT INTO `userfollowing` (`idUser`, `idFollowing`) VALUES ('$idUser', '$idUserFollowing')";
+            $bd->execute_single_query();
+            UserR::actAddContadorFollowings($idUser);
+            UserR::actuilizarFollowers($idUserFollowing,$idUser);
+        }
+        else{
+            $bd->query = "INSERT INTO `userfollowing` (`idUserFollowing`, `idUser`, `idFollowing`, `esPrivado`) VALUES (NULL, '$idUser', '$idUserFollowing', '1');";
+            $bd->execute_single_query();
+        }
+    }
+    public static function esPrivado($idUser,$idUserF){
+        $bool =false;
+        $bd =Conexion_BD_Natuins::getSingleton();
+        $bd->query ="SELECT esPrivado FROM userfollowing WHERE idUser='$idUser'AND idFollowing ='$idUserF'";
+        $bd->rows =null;
+        $bd->get_results_from_query();
+        $privacidad =array_pop($bd->rows);
+        if($privacidad['esPrivado'] ==1){
+            $bool =true;
+        }
+        return$bool;
     }
     private static function actDelContadorFollowers($idUser){
         $bd =Conexion_BD_Natuins::getSingleton();
