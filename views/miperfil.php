@@ -10,6 +10,7 @@
             <link rel='stylesheet' type='text/css' href='css/bootstrap.min.css'>
             <script src='../added/js/jquery-3.3.1.min.js'></script>
             <script src='../added/js/bootstrap.min.js'></script>
+            <script type=\"text/javascript\" src=\"../added/js/notificaciones.js\"></script>
             </head>";
     if(!isset($_SESSION)){
         session_start();

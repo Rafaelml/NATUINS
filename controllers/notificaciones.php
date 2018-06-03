@@ -10,6 +10,5 @@ if(!isset($_SESSION)){
     session_start();
 }
 $resultado= Controller::estadoNotificaciones($_SESSION['idUser']);
-$df =4;
 ob_end_clean();
 echo $resultado;

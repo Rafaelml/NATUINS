@@ -113,6 +113,14 @@ class Tuins
         $bd->get_results_from_query();
         return $bd->rows;
     }
+    public static function getTuins($tuin){
+        $a =$tuin->tuins;
+        return $a;
+    }
+    public static function getIdUser($tuin){
+        $a =$tuin->idUser;
+        return $a;
+    }
 
 
 }

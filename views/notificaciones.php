@@ -26,7 +26,8 @@
             session_start();
         }
         require_once ("../controllers/controller/Controller.php");
-        echo Controller::viewTuinsDestacados($_SESSION["idUser"]);
+        echo Controller::viewNotificaciones($_SESSION["idUser"]);
+        Controller::RevisarNotificaciones($_SESSION["idUser"]);
         ?>
     </div>
 

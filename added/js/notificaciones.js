@@ -12,7 +12,8 @@ $(document).ready(function() {
             },
             success: function (response) {
                 if(response == 1) {
-                    alert("Tiene Notificaciones");
+                    obj = document.getElementById('notificaciones');
+                    obj.style.backgroundColor = (obj.style.backgroundColor == 'rgb(204, 204, 204)') ? 'transparent' : '#CCCCCC';
                 }
             }
         });

@@ -4,6 +4,7 @@ require_once '../models/UserNoR.php';
 require_once '../models/UserR.php';
 require_once '../models/Admin.php';
 require_once '../models/Tuins.php';
+require_once '../models/notificaciones.php';
 
 class Controller{
     private $user;
@@ -87,10 +88,16 @@ class Controller{
     public static function addMegusta($tuin,$idTuin,$idUserDa){
         if(!Tuins::existeMeGusta($idTuin,$idUserDa)){
             Tuins::addMegusta($tuin,$idUserDa);
+            $notificacion ="El usuario " . UserNoR::getNick($idUserDa) . " le ha dado me gusta a su tuin " . Tuins::getTuins($tuin);
+            $idUser = Tuins::getIdUser($tuin);
+            notificaciones::crea($idUser,$notificacion);
         }
     }
     public static function disminuerMG($idTuin,$idUser){
         Tuins::disminuirContMG($idTuin,$idUser);
+    }
+    public static function RevisarNotificaciones($idUser){
+        notificaciones::RevisarNotificaciones($idUser);
     }
     public static function viewTuinsDestacados($idUser){
         $a=-1;
@@ -140,6 +147,9 @@ class Controller{
     public static function actFollowing($idUser ,$idUser_a_Seguir){
         if(!UserR::existFollowing($idUser,$idUser_a_Seguir)){
             UserR::addFollowings($idUser,$idUser_a_Seguir);
+
+            $notificacion ="El usuario " . UserNoR::getNick($idUser) . " le sigue " ;
+            notificaciones::crea($idUser_a_Seguir,$notificacion);
         }
         else{
             UserR::delFollowing($idUser, $idUser_a_Seguir);
@@ -252,7 +262,21 @@ class Controller{
         header('Location: ../views/index2.php');
     }
     public static function estadoNotificaciones($idUser){
-       return UserR::estadoNotificaciones($idUser);
+       return notificaciones::estadoNotificaciones($idUser);
+    }
+    public static function viewNotificaciones($idUser){
+        $notificaciones =notificaciones::getNotificaciones($idUser);
+        $count =count($notificaciones);
+        $mostrar ="";
+        for($i =0;$i<$count;$i++){
+            $mostrar .= '<div id="tuin">';
+            $mostrar = $mostrar . "<p>" . $notificaciones[$i]['notificaciones']. '</p>';
+            $mostrar .= '</div>';
+        }
+        return $mostrar;
+    }
+    public static function getNumNotificaciones($idUser){
+        return notificaciones::getNumNotificaciones($idUser);
     }
     public static function viewPersonasDestacadas(){
         $a ="";
