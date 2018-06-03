@@ -45,6 +45,5 @@ class Conexion_BD_Natuins
         $this->close_conection();
         array_pop($this->rows);
     }
-
 }
 ?>

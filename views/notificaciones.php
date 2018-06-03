@@ -9,7 +9,7 @@
     <script src="../added/js/jquery-3.3.1.min.js"></script>
     <script src="../added/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../added/js/validaciones.js"></script>
-    <script type="text/javascript" src="../added/js/notificaciones.js"></script>a
+    <script type="text/javascript" src="../added/js/notificaciones.js"></script>
 </head>
 <body>
 
