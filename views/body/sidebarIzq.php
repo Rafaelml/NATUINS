@@ -15,7 +15,6 @@
         }
         else{
             echo '<li><a href="index2.php">Administrar Usuarios</a></li>';
-            echo '<li><a href="contenedo.php?$opcion=adminTuins">Administrar Tuins</a></li>';
         }
          echo"</div>";
 ?>

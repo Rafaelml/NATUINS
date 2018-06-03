@@ -207,21 +207,25 @@ class UserR extends UserNoR
             $bd->rows =null;
             $bd->query ="SELECT idFollowing FROM `userfollowing` WHERE idUser ='$idUser'";
             $bd->get_results_from_query();
-            foreach ($bd->rows[0] as $campo =>$valor){
+            if($bd->rows != null){ foreach ($bd->rows[0] as $campo =>$valor){
                 UserR::actDelContadorFollowers($valor);
-            }
+            }}
+
             $bd->rows =null;
             $bd->query ="SELECT idFollower FROM `userfollower` WHERE idUser ='$idUser'";
             $bd->get_results_from_query();
-            foreach ($bd->rows[0] as $campo =>$valor){
-                UserR::actDelContadorFollowings($valor);
+            if($bd->rows != null){
+                foreach ($bd->rows[0] as $campo =>$valor){
+                    UserR::actDelContadorFollowings($valor);
+                }
             }
+
             $bd->query="SELECT idTuin FROM `megustas` WHERE idUser ='$idUser'";
             $bd->rows =null;
             $bd->get_results_from_query();
-            foreach ($bd->rows[0] as $campo =>$valor){
+            if($bd->rows != null){foreach ($bd->rows[0] as $campo =>$valor){
                 Tuins::disminuirContMG($valor);
-            }
+            }}
             $bd->query = "DELETE FROM userr WHERE idUser='$idUser'";
             $bd->execute_single_query();
             $user =null;

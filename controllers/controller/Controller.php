@@ -239,12 +239,12 @@ class Controller{
         return $bool;
     }
     public static function login($nick,$pass,$cont){
+        $user =null;
         if(Controller::cominit($nick)){
             $user =UserR::init_Session($nick,$pass);
         }
         else {
                 $cont->user = Admin::init_Session($nick,$pass);
-                $cont->user->init_Session($nick, $pass);
         }
         if($user){
             $cont->user =$user;
